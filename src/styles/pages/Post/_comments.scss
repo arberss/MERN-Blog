@@ -1,0 +1,139 @@
+.commentModal {
+  width: 38rem;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: $color-white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform: translateX(100%);
+  transition: 0.5s ease-in-out;
+
+  &.active {
+    transform: translateX(0);
+    transition: 0.5s ease-in-out;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.6rem;
+
+    &-close {
+      cursor: pointer;
+    }
+  }
+
+  &__box {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-top: 2.5rem;
+
+    &-me {
+      display: flex;
+      align-items: center;
+
+      &-img {
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-right: 0.5rem;
+        border-radius: 50%;
+      }
+
+      &-name {
+        font-size: 1.2rem;
+      }
+    }
+
+    &-form {
+      margin-top: 2.5rem;
+    }
+
+    &-area {
+      width: 100% !important;
+      resize: none;
+      border: 1px solid rgba(231, 223, 223, 0.9);
+      padding: 5px;
+
+      &::placeholder {
+        font-size: 1rem;
+        color: rgba(158, 147, 147, 1);
+        letter-spacing: 0.2px;
+      }
+    }
+
+    &-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 2rem;
+    }
+
+    &-button {
+      width: fit-content !important;
+      padding: 1rem 2rem !important;
+      border-radius: 2rem;
+      background-color: rgba(26, 137, 23, 0.8);
+      color: white;
+
+      &--cancel {
+        margin-right: 1rem;
+        background-color: transparent;
+        color: black;
+      }
+
+      &--disabled {
+        background-color: rgba(73, 189, 69, 0.8);
+        cursor: not-allowed !important;
+      }
+    }
+  }
+
+  &__noimg {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-right: 0.5rem;
+    border-radius: 50%;
+  }
+
+  &__line {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(231, 223, 223, 0.5);
+    margin-top: 3rem;
+  }
+
+  &__comment {
+    margin-top: 2rem;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba(231, 223, 223, 0.5);
+    }
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2rem;
+
+      &-left {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &-content {
+      margin: 1.5rem 0;
+      font-size: 1.2rem;
+      line-height: 20px;
+    }
+  }
+}

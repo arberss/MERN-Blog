@@ -11,6 +11,7 @@ import { watcher as publicPosts } from './app/posts/public';
 import { watcher as me } from '../sagas/app/me';
 import { watcher as favorites } from '../sagas/app/favorites';
 import { watcher as likes } from '../sagas/app/likes';
+import { watcher as comments } from '../sagas/app/comments';
 
 export default function* root() {
   yield all([
@@ -26,5 +27,6 @@ export default function* root() {
     me(),
     favorites(),
     likes(),
+    comments(),
   ]);
 }

@@ -43,7 +43,7 @@ const reducer = (state = _state, { type, payload }) =>
             ...newState,
             likes: [
               ...newState?.likes,
-              { _id: payload?._id, user: state?.post?.creator?._id },
+              { _id: payload?._id, user: payload?.user },
             ],
             unlikes:
               isUnliked !== -1
@@ -73,7 +73,7 @@ const reducer = (state = _state, { type, payload }) =>
             ...newUnlikeState,
             unlikes: [
               ...newUnlikeState?.unlikes,
-              { _id: payload?._id, user: state?.post?.creator?._id },
+              { _id: payload?._id, user: payload?.user },
             ],
             likes:
               isLiked !== -1

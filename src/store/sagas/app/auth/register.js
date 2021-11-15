@@ -64,6 +64,15 @@ export const sagas = {
         progress: undefined,
       });
     } catch (error) {
+      yield toast.error(error.response.data.message, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       logger.error(error);
     } finally {
       yield put(actions.setLoading(false));

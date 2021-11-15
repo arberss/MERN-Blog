@@ -12,6 +12,7 @@ import publicPosts from '../sagas/app/posts/public';
 import me from '../sagas/app/me';
 import favorites from '../sagas/app/favorites';
 import likes from '../sagas/app/likes';
+import comments from '../sagas/app/comments';
 
 export default function createReducer(injectedReducers) {
   return combineReducers({
@@ -40,6 +41,9 @@ export default function createReducer(injectedReducers) {
       }),
       likes: combineReducers({
         index: likes,
+      }),
+      comments: combineReducers({
+        index: comments,
       }),
     }),
     ...injectedReducers,

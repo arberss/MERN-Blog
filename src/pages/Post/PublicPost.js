@@ -5,6 +5,7 @@ import { actions as postActions } from 'store/sagas/app/post';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as favoriteActions } from 'store/sagas/app/favorites';
 import { actions as likesActions } from 'store/sagas/app/likes';
+import { actions as commentActions } from 'store/sagas/app/comments';
 import Nav from '../../components/Nav';
 import Sticky from 'react-sticky-el';
 import moment from 'moment';
@@ -16,6 +17,7 @@ import { ReactComponent as LikedIcon } from 'assets/img/liked.svg';
 import { ReactComponent as UnLikeIcon } from 'assets/img/unlike.svg';
 import { ReactComponent as UnLikedIcon } from 'assets/img/unliked.svg';
 import { ReactComponent as CommentIcon } from 'assets/img/comment.svg';
+import CommentModal from './CommentModal/CommentModal';
 
 const { REACT_APP_WEB_API_IMG_URL } = process.env;
 
@@ -31,11 +33,16 @@ const PublicPost = (props) => {
     loading,
     likePost,
     unlikePost,
+    showCommentModal,
+    setShowCommentModal,
+    submitComment,
   } = props;
 
   useEffect(() => {
     const postId = match?.params?.postId;
     fetchPost(postId);
+
+    return () => setShowCommentModal(false);
   }, []);
 
   const handleFavorite = (postId) => {
@@ -52,6 +59,44 @@ const PublicPost = (props) => {
       });
     } else {
       setFavorite(postId);
+    }
+  };
+
+  const handleLike = (postId, action) => {
+    if (!isAuth) {
+      setModal(true);
+      toast.warning(`Sign In to ${action} the post.`, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      if (action === 'like') {
+        likePost(postId);
+      } else {
+        unlikePost(postId);
+      }
+    }
+  };
+
+  const submitCommentFn = ({ values, formActions }) => {
+    if (!isAuth) {
+      setModal(true);
+      toast.warning('Sign In to write comment.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      submitComment({ values, formActions, postId: match?.params?.postId });
     }
   };
 
@@ -74,17 +119,15 @@ const PublicPost = (props) => {
                 <div className='singlePost__left-line'></div>
                 <div className='singlePost__left-bottom'>
                   <div className='singlePost__icon-body'>
-                    {post?.likes?.some(
-                      (like) => like?.user === post?.creator?._id
-                    ) ? (
+                    {post?.likes?.some((like) => like?.user === user?._id) ? (
                       <LikedIcon
                         className='singlePost__icon'
-                        onClick={() => likePost(post?._id)}
+                        onClick={() => handleLike(post?._id, 'like')}
                       />
                     ) : (
                       <LikeIcon
                         className='singlePost__icon'
-                        onClick={() => likePost(post?._id)}
+                        onClick={() => handleLike(post?._id, 'like')}
                       />
                     )}
                     <span className='singlePost__icon-info'>
@@ -92,17 +135,15 @@ const PublicPost = (props) => {
                     </span>
                   </div>
                   <div className='singlePost__icon-body'>
-                    {post?.unlikes?.some(
-                      (like) => like?.user === post?.creator?._id
-                    ) ? (
+                    {post?.unlikes?.some((like) => like?.user === user?._id) ? (
                       <UnLikedIcon
                         className='singlePost__icon'
-                        onClick={() => unlikePost(post?._id)}
+                        onClick={() => handleLike(post?._id, 'unlike')}
                       />
                     ) : (
                       <UnLikeIcon
                         className='singlePost__icon'
-                        onClick={() => unlikePost(post?._id)}
+                        onClick={() => handleLike(post?._id, 'unlike')}
                       />
                     )}
                     <span className='singlePost__icon-info'>
@@ -110,7 +151,10 @@ const PublicPost = (props) => {
                     </span>
                   </div>
                   <div className='singlePost__icon-body'>
-                    <CommentIcon className='singlePost__icon singlePost__icon--comment' />
+                    <CommentIcon
+                      className='singlePost__icon singlePost__icon--comment'
+                      onClick={() => setShowCommentModal(true)}
+                    />
                     <span className='singlePost__icon-info'>
                       {post?.comments?.length}
                     </span>
@@ -178,6 +222,14 @@ const PublicPost = (props) => {
           </div>
         </div>
       </div>
+      <CommentModal
+        setModal={setShowCommentModal}
+        showModal={showCommentModal}
+        comments={post?.comments}
+        user={user}
+        submitComment={submitCommentFn}
+        isAuth={isAuth}
+      />
     </div>
   );
 };
@@ -187,6 +239,7 @@ const mapStateToProps = (state) => ({
   loading: state.app.post.index.loading,
   isAuth: state.app.auth.login.isAuth,
   user: state?.app?.me?.index?.user,
+  showCommentModal: state?.app?.comments?.index?.showModal,
 });
 
 const mapDispatchToProps = {
@@ -195,6 +248,8 @@ const mapDispatchToProps = {
   setFavorite: favoriteActions.setFavorite,
   likePost: likesActions.likePost,
   unlikePost: likesActions.unlikePost,
+  setShowCommentModal: commentActions.showModal,
+  submitComment: commentActions.comment,
 };
 
 export default connect(
