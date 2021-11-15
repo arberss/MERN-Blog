@@ -1,0 +1,69 @@
+.nav {
+  background-color: lightblue;
+  height: 6.5rem;
+  display: flex;
+  align-items: center;
+
+  &__white {
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 6px;
+    background-color: white;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    font-size: 1.6rem;
+    cursor: pointer;
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+
+    &--register {
+      margin-left: 1.3rem;
+      background-color: $color-black;
+      color: $color-white;
+      border-radius: 3rem;
+    }
+  }
+
+  &__authIcon {
+    margin-right: 1.4rem;
+    fill: rgba(117, 117, 117, 1);
+    cursor: pointer;
+  }
+}
+
+.userMenu {
+  &__lists {
+    padding: 0 2rem;
+    padding-bottom: 0.5rem;
+    font-size: 1.4rem;
+  }
+
+  &__list {
+    margin-top: 1.2rem;
+    cursor: pointer;
+  }
+
+  .css-azeo8y-MuiAvatar-root {
+    background-color: #d06969 !important;
+  }
+
+  .css-137ul40-MuiButtonBase-root-MuiIconButton-root {
+    margin-left: 0 !important;
+  }
+}

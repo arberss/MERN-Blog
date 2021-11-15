@@ -1,0 +1,22 @@
+.react-quill {
+  position: relative;
+
+  float: left;
+  width: 100%;
+  min-height: 200px;
+  .quill {
+    position: relative;
+
+    float: left;
+    width: 100%;
+  }
+  .ql-toolbar.ql-snow {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  .ql-container.ql-snow {
+    height: calc(200px - 42.3px);
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+}

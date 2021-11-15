@@ -1,0 +1,49 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Rubik', sans-serif;
+}
+
+main {
+  overflow: hidden;
+}
+
+html {
+  font-size: 62.5%; // 1rem = 10px, 10/16 = 0.625 * 100 => 62.5%
+
+  @include respond(tab-port) {
+    font-size: 50%;
+  }
+
+  @include respond(normal-desktop) {
+    font-size: 80%;
+  }
+
+  @include respond(big-desktop) {
+    font-size: 100%;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 120rem;
+  padding: 0 2rem;
+  margin: 0 auto;
+
+  @include respond(phone) {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  @include respond(tabUp) {
+    width: 100%;
+  }
+}

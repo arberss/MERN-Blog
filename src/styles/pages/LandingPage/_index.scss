@@ -1,0 +1,39 @@
+.landing {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  // header
+  .header {
+    width: 100%;
+    height: 100%;
+    background-image: url('https://miro.medium.com/max/349/4*BIK9VGjeCj2TaTDw4id2nA.png');
+    background-repeat: no-repeat;
+    background-position: bottom 0 right 5rem;
+    background-color: rgb(219, 255, 255);
+
+    &__content {
+      padding: 4rem 0;
+      width: 42%;
+    }
+
+    &__title {
+      font-size: 6.2rem;
+      font-weight: bold;
+    }
+
+    &__text {
+      margin-top: 1rem;
+      font-size: 2rem;
+    }
+
+    &__btn {
+      padding: 1.2rem 2rem;
+      border-radius: 3rem;
+      background-color: $color-white;
+      border: 2px solid rgb(187, 228, 245);
+      margin-top: 2rem;
+      font-size: 1.5rem;
+    }
+  }
+}

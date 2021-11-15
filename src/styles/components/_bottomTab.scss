@@ -1,0 +1,10 @@
+.bottomTab {
+  width: 30%;
+  position: fixed;
+  left: 49.99%;
+  bottom: 0;
+  transform: translate(-50%, 0%);
+  background-color: $color-black;
+  padding: 15px 10px;
+  z-index: 2000;
+}

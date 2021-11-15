@@ -1,0 +1,29 @@
+.recommandedTopics {
+  margin-top: 3.5rem;
+
+  &__sticky {
+    margin-top: 2rem;
+    transition: 0.2s ease-in-out;
+  }
+
+  &__title {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  &__topics {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  &__topic {
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    background-color: rgba(242, 242, 242, 1);
+    border-radius: 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+}
