@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { actions as logoutAction } from 'store/sagas/app/auth/logout';
+import { actions as navigateActions } from 'store/sagas/app/navigation';
+
+const { REACT_APP_WEB_API_IMG_URL } = process.env;
 
 const UserMenu = (props) => {
-  const { logout } = props;
+  const { navigate, logout, user } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -28,7 +30,15 @@ const UserMenu = (props) => {
       <Box sx={styles.content}>
         <Tooltip title='Account settings'>
           <IconButton onClick={handleClick} size='small' sx={{ ml: 2 }}>
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            {!user?.imageUrl ? (
+              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            ) : (
+              <img
+                className='userMenu__img'
+                src={`${REACT_APP_WEB_API_IMG_URL}${user?.imageUrl}`}
+                alt=''
+              />
+            )}
           </IconButton>
         </Tooltip>
       </Box>
@@ -42,7 +52,12 @@ const UserMenu = (props) => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <ul className='userMenu__lists'>
-          <li className='userMenu__list'>Settings</li>
+          <li
+            className='userMenu__list'
+            onClick={() => navigate('/user/settings')}
+          >
+            Settings
+          </li>
           <li className='userMenu__list' onClick={logout}>
             Log Out
           </li>
@@ -54,10 +69,12 @@ const UserMenu = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuth: state?.app?.auth?.login?.isAuth,
+  user: state?.app?.me?.index.user,
 });
 
 const mapDispatchToProps = {
   logout: logoutAction.logout,
+  navigate: navigateActions.navigate,
 };
 
 export default connect(

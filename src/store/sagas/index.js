@@ -13,6 +13,7 @@ import { watcher as favorites } from '../sagas/app/favorites';
 import { watcher as likes } from '../sagas/app/likes';
 import { watcher as comments } from '../sagas/app/comments';
 import { watcher as deleteComment } from '../sagas/app/comments/delete';
+import { watcher as settings } from '../sagas/app/settings';
 
 export default function* root() {
   yield all([
@@ -30,5 +31,6 @@ export default function* root() {
     likes(),
     comments(),
     deleteComment(),
+    settings(),
   ]);
 }

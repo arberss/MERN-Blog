@@ -42,6 +42,9 @@ const Comment = (props) => {
             <div className='commentModal__comment-header-name'>John Doe</div>
           </div>
         </div>
+        {comment?.edited && (
+          <div className='commentModal__comment-edited'>(edited)</div>
+        )}
         <div className='commentModal__comment-header-left'>
           {user?._id === comment?.user?._id && <DropDownMenu lists={lists} />}
         </div>

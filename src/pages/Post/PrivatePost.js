@@ -4,12 +4,17 @@ import { withRouter } from 'react-router';
 import { actions as postActions } from 'store/sagas/app/post';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as favoriteActions } from 'store/sagas/app/favorites';
-import Nav from '../../components/Nav';
-import Sticky from 'react-sticky-el';
+import { actions as likesActions } from 'store/sagas/app/likes';
+import { actions as commentActions } from 'store/sagas/app/comments';
+import { actions as deleteCommentActions } from 'store/sagas/app/comments/delete';
+import Nav from 'components/Nav';
+
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { ReactComponent as FavFilled } from 'assets/img/favorite-filled.svg';
 import { ReactComponent as FavUnfilled } from 'assets/img/favorite-unfilled.svg';
+import CommentModal from './CommentModal/CommentModal';
+import StickyComp from './StickyComponent';
 
 const { REACT_APP_WEB_API_IMG_URL } = process.env;
 
@@ -23,11 +28,27 @@ const PrivatePost = (props) => {
     isAuth,
     setModal,
     loading,
+    likePost,
+    unlikePost,
+    showCommentModal,
+    setShowCommentModal,
+    submitComment,
+    getComments,
+    comments,
+    comment,
+    clearComments,
+    selectComment,
+    deleteComment,
+    initialValues,
   } = props;
 
   useEffect(() => {
     const postId = match?.params?.postId;
     fetchPost(postId);
+    return () => {
+      setShowCommentModal(false);
+      clearComments();
+    };
   }, []);
 
   const handleFavorite = (postId) => {
@@ -47,20 +68,66 @@ const PrivatePost = (props) => {
     }
   };
 
+  const handleLike = (postId, action) => {
+    if (!isAuth) {
+      setModal(true);
+      toast.warning(`Sign In to ${action} the post.`, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      if (action === 'like') {
+        likePost(postId);
+      } else {
+        unlikePost(postId);
+      }
+    }
+  };
+
+  const handleCommentIcon = (postId) => {
+    getComments(postId);
+    setShowCommentModal(true);
+  };
+
+  const submitCommentFn = ({ values, formActions }) => {
+    if (!isAuth) {
+      setModal(true);
+      toast.warning('Sign In to write comment.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      submitComment({
+        values,
+        formActions,
+        postId: match?.params?.postId,
+        commentId: comment?._id,
+      });
+    }
+  };
+
   return (
     <div className='singlePost'>
       <Nav />
       <div className='container'>
         <div className='singlePost__content'>
-          <div className='singlePost__left'>
-            <Sticky
-              boundaryElement='.block'
-              topOffset={40}
-              stickyClassName={'recommandedTopics__sticky'}
-            >
-              <h1>Left</h1>
-            </Sticky>
-          </div>
+          <StickyComp
+            post={post}
+            user={user}
+            handleLike={handleLike}
+            handleCommentIcon={handleCommentIcon}
+            handleFavorite={handleFavorite}
+          />
           <div className='singlePost__right'>
             {loading ? (
               <h1>Loading</h1>
@@ -103,6 +170,19 @@ const PrivatePost = (props) => {
           </div>
         </div>
       </div>
+      <CommentModal
+        setModal={setShowCommentModal}
+        showModal={showCommentModal}
+        comments={comments}
+        user={user}
+        submitComment={submitCommentFn}
+        isAuth={isAuth}
+        deleteComment={deleteComment}
+        postId={match.params.postId}
+        selectComment={selectComment}
+        selectedComment={comment}
+        initialValues={initialValues}
+      />
     </div>
   );
 };
@@ -112,12 +192,24 @@ const mapStateToProps = (state) => ({
   loading: state.app.post.index.loading,
   isAuth: state.app.auth.login.isAuth,
   user: state?.app?.me?.index?.user,
+  comments: state?.app?.comments?.index?.comments,
+  initialValues: state?.app?.comments?.index?.initialValues,
+  comment: state?.app?.comments?.index?.comment,
+  showCommentModal: state?.app?.comments?.index?.showModal,
 });
 
 const mapDispatchToProps = {
   fetchPost: postActions.fetchPost,
   setModal: loginActions.setModal,
   setFavorite: favoriteActions.setFavorite,
+  likePost: likesActions.likePost,
+  unlikePost: likesActions.unlikePost,
+  setShowCommentModal: commentActions.showModal,
+  submitComment: commentActions.comment,
+  getComments: commentActions.getComments,
+  clearComments: commentActions.clearComments,
+  selectComment: commentActions.selectComment,
+  deleteComment: deleteCommentActions.deleteComment,
 };
 
 export default connect(

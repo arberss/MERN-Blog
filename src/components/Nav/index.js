@@ -40,7 +40,10 @@ const Nav = (props) => {
               </>
             ) : (
               <>
-                <BookmarkIcon className='nav__authIcon' />
+                <BookmarkIcon
+                  className='nav__authIcon'
+                  onClick={() => navigate('/post/favorites/')}
+                />
                 <NotificationIcon className='nav__authIcon' />
                 <UserMenu />
               </>

@@ -59,6 +59,12 @@
     cursor: pointer;
   }
 
+  &__img {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+  }
+
   .css-azeo8y-MuiAvatar-root {
     background-color: #d06969 !important;
   }

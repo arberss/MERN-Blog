@@ -3,6 +3,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import createAction from 'utils/action-creator';
 import { actions as navigation } from '../navigation';
+import { actions as settingsActions } from '../settings';
 import Logger from 'utils/logger';
 import axios from 'utils/axios';
 import { SET_FAVORITE_SUCCESS } from '../favorites';
@@ -57,6 +58,7 @@ export const sagas = {
     try {
       const response = yield axios.get('/user');
       yield put(actions.meSuccess(response?.data));
+      yield put(settingsActions.setUserInfo(response?.data));
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('ERRRRORII', error);

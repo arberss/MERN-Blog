@@ -48,6 +48,24 @@ const reducer = (state = _state, { type, payload }) =>
       case COMMENT_SUCCESS:
         const newComment = [payload, ...state?.comments];
         draft.comments = newComment;
+        draft.initialValues = {
+          comment: '',
+        };
+        break;
+      case EDIT_COMMENT_SUCCESS:
+        const clonedComments = [...state.comments];
+        const index = state.comments.findIndex(
+          (c) => c?._id === payload?.commentId
+        );
+        clonedComments[index] = {
+          ...clonedComments[index],
+          text: payload?.text,
+          edited: payload?.edited,
+        };
+        draft.comments = clonedComments;
+        draft.initialValues = {
+          comment: '',
+        };
         break;
       case DELETE_COMMENT_SUCCESS:
         draft.comments = state.comments.filter(
@@ -127,6 +145,7 @@ export const sagas = {
             text: payload?.values?.comment,
           }
         );
+        yield put(actions.editCommentSuccess(response?.data));
       }
       payload?.formActions?.resetForm();
     } catch (error) {

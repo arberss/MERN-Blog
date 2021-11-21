@@ -7,17 +7,16 @@ import history from 'utils/history';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { withRouter } from 'react-router';
-import Feeds from 'pages/Feeds';
 import ProtectedRoute from 'components/ProtectedRoute';
-import UserRoute from 'components/ProtectedRoute/UserRoute';
 import { getCurrentUser } from 'utils/currentUser';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as meActions } from 'store/sagas/app/me';
 import { connect } from 'react-redux';
 import Posts from 'pages/Posts';
-import Post from 'pages/Post';
 import PublicPost from 'pages/Post/PublicPost';
 import PrivatePost from 'pages/Post/PrivatePost';
+import Favorites from 'pages/Favorites';
+import Settings from 'pages/Settings';
 
 function App(props) {
   const {
@@ -55,18 +54,24 @@ function App(props) {
             path='/posts'
             component={Posts}
           />
-          <ProtectedRoute
-            protectedRole={['USER', 'ADMIN']}
-            exact
-            path='/post/:postId'
-            component={Post}
-          />
           <Route exact path='/post/public/:postId' component={PublicPost} />
           <ProtectedRoute
             protectedRole={['USER', 'ADMIN']}
             exact
             path='/post/private/:postId'
             component={PrivatePost}
+          />
+          <ProtectedRoute
+            protectedRole={['USER', 'ADMIN']}
+            exact
+            path='/post/favorites/'
+            component={Favorites}
+          />
+          <ProtectedRoute
+            protectedRole={['USER', 'ADMIN']}
+            exact
+            path='/user/settings'
+            component={Settings}
           />
           <Redirect to='/' />
         </Switch>

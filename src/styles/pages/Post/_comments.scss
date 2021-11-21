@@ -129,6 +129,22 @@
         display: flex;
         align-items: center;
       }
+
+      &-img {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+      }
+
+      &-name {
+        margin-left: 1rem;
+        font-size: 1.2rem;
+      }
+    }
+
+    &-edited {
+      font-size: 1rem;
+      color: rgba(0, 0, 0, 0.5);
     }
 
     &-content {

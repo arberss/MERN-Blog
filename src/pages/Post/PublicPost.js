@@ -7,7 +7,7 @@ import { actions as favoriteActions } from 'store/sagas/app/favorites';
 import { actions as likesActions } from 'store/sagas/app/likes';
 import { actions as commentActions } from 'store/sagas/app/comments';
 import { actions as deleteCommentActions } from 'store/sagas/app/comments/delete';
-import Nav from '../../components/Nav';
+import Nav from 'components/Nav';
 
 import moment from 'moment';
 import { toast } from 'react-toastify';

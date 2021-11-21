@@ -1,0 +1,82 @@
+.settings {
+  &__content {
+    width: 60%;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  &__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5rem;
+    // align-items: center;
+  }
+
+  &__inputs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 4rem;
+    margin-top: 4rem;
+  }
+
+  &__input {
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    border-radius: 5px;
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &__image {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background-color: grey;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+    // cursor: pointer;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  &__noimg {
+    font-size: 3rem;
+  }
+
+  &__file {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 5;
+    cursor: pointer;
+  }
+
+  &__saveBtn {
+    width: auto !important;
+    padding: 1.5rem 6rem !important;
+    background-color: rgb(10, 110, 10);
+    margin: 0 auto;
+    margin-top: 4rem;
+    color: $color-white;
+  }
+}
