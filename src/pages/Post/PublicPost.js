@@ -6,18 +6,15 @@ import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as favoriteActions } from 'store/sagas/app/favorites';
 import { actions as likesActions } from 'store/sagas/app/likes';
 import { actions as commentActions } from 'store/sagas/app/comments';
+import { actions as deleteCommentActions } from 'store/sagas/app/comments/delete';
 import Nav from '../../components/Nav';
-import Sticky from 'react-sticky-el';
+
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { ReactComponent as FavFilled } from 'assets/img/favorite-filled.svg';
 import { ReactComponent as FavUnfilled } from 'assets/img/favorite-unfilled.svg';
-import { ReactComponent as LikeIcon } from 'assets/img/like.svg';
-import { ReactComponent as LikedIcon } from 'assets/img/liked.svg';
-import { ReactComponent as UnLikeIcon } from 'assets/img/unlike.svg';
-import { ReactComponent as UnLikedIcon } from 'assets/img/unliked.svg';
-import { ReactComponent as CommentIcon } from 'assets/img/comment.svg';
 import CommentModal from './CommentModal/CommentModal';
+import StickyComp from './StickyComponent';
 
 const { REACT_APP_WEB_API_IMG_URL } = process.env;
 
@@ -36,13 +33,23 @@ const PublicPost = (props) => {
     showCommentModal,
     setShowCommentModal,
     submitComment,
+    getComments,
+    comments,
+    comment,
+    clearComments,
+    selectComment,
+    deleteComment,
+    initialValues,
   } = props;
 
   useEffect(() => {
     const postId = match?.params?.postId;
     fetchPost(postId);
 
-    return () => setShowCommentModal(false);
+    return () => {
+      setShowCommentModal(false);
+      clearComments();
+    };
   }, []);
 
   const handleFavorite = (postId) => {
@@ -83,6 +90,11 @@ const PublicPost = (props) => {
     }
   };
 
+  const handleCommentIcon = (postId) => {
+    getComments(postId);
+    setShowCommentModal(true);
+  };
+
   const submitCommentFn = ({ values, formActions }) => {
     if (!isAuth) {
       setModal(true);
@@ -96,7 +108,12 @@ const PublicPost = (props) => {
         progress: undefined,
       });
     } else {
-      submitComment({ values, formActions, postId: match?.params?.postId });
+      submitComment({
+        values,
+        formActions,
+        postId: match?.params?.postId,
+        commentId: comment?._id,
+      });
     }
   };
 
@@ -105,75 +122,13 @@ const PublicPost = (props) => {
       <Nav />
       <div className='container'>
         <div className='singlePost__content'>
-          <div className='singlePost__left'>
-            <Sticky
-              boundaryElement='.block'
-              topOffset={40}
-              stickyClassName={'recommandedTopics__sticky'}
-            >
-              <div className='singlePost__left-content'>
-                <div className='singlePost__left-user'>
-                  {post?.creator?.name}
-                </div>
-                <div className='singlePost__left-post'>{post?.title}</div>
-                <div className='singlePost__left-line'></div>
-                <div className='singlePost__left-bottom'>
-                  <div className='singlePost__icon-body'>
-                    {post?.likes?.some((like) => like?.user === user?._id) ? (
-                      <LikedIcon
-                        className='singlePost__icon'
-                        onClick={() => handleLike(post?._id, 'like')}
-                      />
-                    ) : (
-                      <LikeIcon
-                        className='singlePost__icon'
-                        onClick={() => handleLike(post?._id, 'like')}
-                      />
-                    )}
-                    <span className='singlePost__icon-info'>
-                      {post?.likes?.length}
-                    </span>
-                  </div>
-                  <div className='singlePost__icon-body'>
-                    {post?.unlikes?.some((like) => like?.user === user?._id) ? (
-                      <UnLikedIcon
-                        className='singlePost__icon'
-                        onClick={() => handleLike(post?._id, 'unlike')}
-                      />
-                    ) : (
-                      <UnLikeIcon
-                        className='singlePost__icon'
-                        onClick={() => handleLike(post?._id, 'unlike')}
-                      />
-                    )}
-                    <span className='singlePost__icon-info'>
-                      {post?.unlikes?.length}
-                    </span>
-                  </div>
-                  <div className='singlePost__icon-body'>
-                    <CommentIcon
-                      className='singlePost__icon singlePost__icon--comment'
-                      onClick={() => setShowCommentModal(true)}
-                    />
-                    <span className='singlePost__icon-info'>
-                      {post?.comments?.length}
-                    </span>
-                  </div>
-                  {user?.favorites?.includes(post?._id) ? (
-                    <FavFilled
-                      className='singlePost__icon'
-                      onClick={() => handleFavorite(post._id)}
-                    />
-                  ) : (
-                    <FavUnfilled
-                      className='singlePost__icon'
-                      onClick={() => handleFavorite(post._id)}
-                    />
-                  )}
-                </div>
-              </div>
-            </Sticky>
-          </div>
+          <StickyComp
+            post={post}
+            user={user}
+            handleLike={handleLike}
+            handleCommentIcon={handleCommentIcon}
+            handleFavorite={handleFavorite}
+          />
           <div className='singlePost__right'>
             {loading ? (
               <h1>Loading</h1>
@@ -225,10 +180,15 @@ const PublicPost = (props) => {
       <CommentModal
         setModal={setShowCommentModal}
         showModal={showCommentModal}
-        comments={post?.comments}
+        comments={comments}
         user={user}
         submitComment={submitCommentFn}
         isAuth={isAuth}
+        deleteComment={deleteComment}
+        postId={match.params.postId}
+        selectComment={selectComment}
+        selectedComment={comment}
+        initialValues={initialValues}
       />
     </div>
   );
@@ -239,6 +199,9 @@ const mapStateToProps = (state) => ({
   loading: state.app.post.index.loading,
   isAuth: state.app.auth.login.isAuth,
   user: state?.app?.me?.index?.user,
+  comments: state?.app?.comments?.index?.comments,
+  initialValues: state?.app?.comments?.index?.initialValues,
+  comment: state?.app?.comments?.index?.comment,
   showCommentModal: state?.app?.comments?.index?.showModal,
 });
 
@@ -250,6 +213,10 @@ const mapDispatchToProps = {
   unlikePost: likesActions.unlikePost,
   setShowCommentModal: commentActions.showModal,
   submitComment: commentActions.comment,
+  getComments: commentActions.getComments,
+  clearComments: commentActions.clearComments,
+  selectComment: commentActions.selectComment,
+  deleteComment: deleteCommentActions.deleteComment,
 };
 
 export default connect(

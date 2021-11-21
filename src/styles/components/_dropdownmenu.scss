@@ -1,0 +1,19 @@
+.DropDownMenu {
+  width: 20px;
+  height: 20px;
+
+  &__lists {
+    padding: 0 1.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  &__list {
+    margin-top: 1.2rem;
+    cursor: pointer;
+  }
+
+  .css-137ul40-MuiButtonBase-root-MuiIconButton-root {
+    margin-left: 0 !important;
+  }
+}

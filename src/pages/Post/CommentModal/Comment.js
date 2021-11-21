@@ -1,9 +1,21 @@
+import DropDownMenu from 'components/DropDownMenu';
 import React from 'react';
 
 const { REACT_APP_WEB_API_IMG_URL } = process.env;
 
 const Comment = (props) => {
-  const { comment } = props;
+  const { comment, user, deleteComment, postId, selectComment } = props;
+
+  const lists = [
+    {
+      name: 'Delete',
+      fn: () => deleteComment({ postId, commentId: comment?._id }),
+    },
+    {
+      name: 'Edit',
+      fn: () => selectComment(comment),
+    },
+  ];
 
   const nameInitials = comment?.user?.name?.split(' ');
 
@@ -30,7 +42,9 @@ const Comment = (props) => {
             <div className='commentModal__comment-header-name'>John Doe</div>
           </div>
         </div>
-        <div className='commentModal__comment-header-left'>Edit</div>
+        <div className='commentModal__comment-header-left'>
+          {user?._id === comment?.user?._id && <DropDownMenu lists={lists} />}
+        </div>
       </div>
       <div className='commentModal__comment-content'>{comment?.text}</div>
     </div>
