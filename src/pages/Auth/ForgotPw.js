@@ -6,7 +6,6 @@ import Button from 'components/button';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
-import { actions as registerAction } from 'store/sagas/app/auth/register';
 import { actions as forgotActions } from 'store/sagas/app/auth/forgot';
 import { actions as navigation } from 'store/sagas/app/navigation';
 import Dialog from '@mui/material/Dialog';
@@ -20,36 +19,20 @@ const validationSchema = yup.object().shape({
     .label('Email')
     .email('Enter a valid email')
     .required('Please enter a registered email'),
-  password: yup
-    .string()
-    .label('Password')
-    .required()
-    .min(0, 'Password must have at least 8 characters '),
 });
 
 const Login = (props) => {
-  const {
-    submitLogin,
-    navigate,
-    setModal,
-    showModal,
-    setRegisterModal,
-    setForgotModal,
-  } = props;
+  const { sendRecovery, navigate, setModal, showForgotModal, setLoginModal } =
+    props;
 
-  const navigateRegister = () => {
+  const navigateLogin = () => {
     setModal(false);
-    setRegisterModal(true);
-  };
-
-  const navigateForgot = () => {
-    setModal(false);
-    setForgotModal(true);
+    setLoginModal(true);
   };
 
   return (
     <Dialog
-      open={showModal}
+      open={showForgotModal}
       onClose={() => setModal(false)}
       scroll='body'
       aria-labelledby='scroll-dialog-title'
@@ -58,9 +41,9 @@ const Login = (props) => {
       <div className='login'>
         <CloseIcon className='login__close' onClick={() => setModal(false)} />
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ email: '' }}
           onSubmit={(values, actions) =>
-            submitLogin({ values, formActions: actions })
+            sendRecovery({ values, formActions: actions })
           }
           validationSchema={validationSchema}
         >
@@ -74,7 +57,7 @@ const Login = (props) => {
             isSubmitting,
           }) => (
             <div className='container'>
-              <div className='login__title'>Welcome Back.</div>
+              <div className='login__title'>Password Recovery</div>
               <form
                 className='login__form'
                 autoComplete='off'
@@ -92,24 +75,10 @@ const Login = (props) => {
                   handleChange={handleChange}
                   touched={touched.email}
                 />
-                <InputComponent
-                  name='password'
-                  placeholder='Password'
-                  type='password'
-                  errorClass='errorClass'
-                  errors={errors.password}
-                  values={values.password}
-                  handleBlur={handleBlur}
-                  handleChange={handleChange}
-                  touched={touched.password}
-                />
-                <div className='login__forgotPass' onClick={navigateForgot}>
-                  Forgot Password?
-                </div>
-                <Button title='sign in' newClass='login__btn' type='submit' />
+                <Button title='Send' newClass='login__btn' type='submit' />
               </form>
               <div className='login__new'>
-                New User? <span onClick={navigateRegister}>Sign up</span>
+                <span onClick={navigateLogin}>Login</span>
               </div>
             </div>
           )}
@@ -121,13 +90,13 @@ const Login = (props) => {
 
 const mapStateToProps = (state) => ({
   login: state.app.auth.login,
-  showModal: state.app.auth.login.modal,
+  showForgotModal: state.app.auth.forgot.modal,
+  showLoginModal: state.app.auth.login.modal,
 });
 const mapDispatchToProps = {
-  submitLogin: loginActions.login,
-  setModal: loginActions.setModal,
-  setRegisterModal: registerAction.setModal,
-  setForgotModal: forgotActions.setModal,
+  sendRecovery: forgotActions.forgotPassword,
+  setModal: forgotActions.setModal,
+  setLoginModal: loginActions.setModal,
   navigate: navigation.navigate,
 };
 

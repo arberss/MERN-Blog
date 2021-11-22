@@ -41,7 +41,7 @@ const Settings = (props) => {
         <Formik
           enableReinitialize={true}
           initialValues={initialValues}
-          onSubmit={(values, actions) => updateUser(values)}
+          onSubmit={(values, actions) => updateUser({ values, actions })}
           validationSchema={validationSchema}
         >
           {({
@@ -55,6 +55,7 @@ const Settings = (props) => {
             isSubmitting,
           }) => (
             <div className='settings__content'>
+              {console.log(values)}
               <div className='settings__title'>Account Details</div>
               <form className='settings__form' onSubmit={handleSubmit}>
                 <div className='settings__image'>

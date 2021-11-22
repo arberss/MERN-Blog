@@ -53,6 +53,7 @@ export const sagas = {
 
       yield axios.post('/user/create', obj);
       yield put(navigation.navigate('/login'));
+      payload.formActions.resetForm({});
 
       yield toast.success('You have create a new account!', {
         position: 'top-right',

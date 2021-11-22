@@ -11,8 +11,9 @@ import { SET_FAVORITE_SUCCESS } from '../favorites';
 const logger = new Logger('User Me');
 
 const PREFIX = '@app/me/Index';
-export const FETCH_ME = `${PREFIX} FETCH_ME`;
-export const FETCH_ME_SUCCESS = `${PREFIX} FETCH_ME_SUCCESS`;
+export const FETCH_ME = `${PREFIX}FETCH_ME`;
+export const FETCH_ME_SUCCESS = `${PREFIX}FETCH_ME_SUCCESS`;
+export const UPDATE_ME = `${PREFIX}UPDATE_ME`;
 export const SET_LOADING = `${PREFIX}SET_LOADING`;
 
 const _state = {
@@ -25,6 +26,11 @@ const reducer = (state = _state, { type, payload }) =>
     switch (type) {
       case FETCH_ME_SUCCESS:
         draft.user = payload;
+        break;
+      case UPDATE_ME:
+        draft.user.name = payload.name;
+        draft.user.email = payload.email;
+        draft.user.imageUrl = payload.imageUrl;
         break;
       case SET_LOADING:
         draft.loading = payload;
@@ -50,6 +56,7 @@ export default reducer;
 export const actions = {
   me: (payload) => createAction(FETCH_ME, { payload }),
   meSuccess: (payload) => createAction(FETCH_ME_SUCCESS, { payload }),
+  updateMe: (payload) => createAction(UPDATE_ME, { payload }),
   setLoading: (payload) => createAction(SET_LOADING, { payload }),
 };
 

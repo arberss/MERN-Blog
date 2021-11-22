@@ -3,6 +3,8 @@ import { put, takeLatest } from 'redux-saga/effects';
 import createAction from 'utils/action-creator';
 import Logger from 'utils/logger';
 import axios from 'utils/axios';
+import { toast } from 'react-toastify';
+import { actions as meActions } from '../me';
 
 const logger = new Logger('Post Index');
 
@@ -31,6 +33,13 @@ const reducer = (state = _state, { type, payload }) =>
         draft.initialValues.email = payload?.email;
         draft.initialValues.imageUrl = payload?.imageUrl;
         break;
+      case UPDATE_USER_SUCCESS:
+        draft.initialValues.name = payload?.name;
+        draft.initialValues.email = payload?.email;
+        draft.initialValues.imageUrl = payload?.imageUrl;
+        draft.initialValues.password = '';
+        draft.initialValues.confirmPassword = '';
+        break;
       case SET_LOADING:
         draft.loading = payload;
         break;
@@ -52,16 +61,34 @@ export const sagas = {
   *updateUser({ payload }) {
     yield put(actions.setLoading(true));
     try {
-      console.log(payload);
       let formData = new FormData();
-      formData.append('imageUrl', payload?.imageUrl);
-      formData.append('name', payload?.name);
-      formData.append('email', payload?.email);
-      formData.append('password', payload?.password);
-      formData.append('confirmPassword', payload?.confirmPassword);
+      formData.append('imageUrl', payload?.values?.imageUrl);
+      formData.append('name', payload?.values?.name);
+      formData.append('email', payload?.values?.email);
+      formData.append('password', payload?.values?.password);
+      formData.append('confirmPassword', payload?.values?.confirmPassword);
       const response = yield axios.put(`/user`, formData);
-      console.log(response);
       yield put(actions.updateUserSuccess(response?.data));
+      yield put(meActions.updateMe(response?.data));
+      payload?.actions?.resetForm({
+        values: {
+          name: response?.data?.name,
+          email: response?.data?.email,
+          imageUrl: response?.data?.imageUrl,
+          password: '',
+          confirmPassword: '',
+        },
+      });
+
+      toast.success('You have updated succesfully your account.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (error) {
       logger.error(error);
     } finally {

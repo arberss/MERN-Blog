@@ -5,6 +5,7 @@ import history from 'utils/history';
 import login from '../sagas/app/auth/login';
 import logout from '../sagas/app/auth/logout';
 import register from '../sagas/app/auth/register';
+import forgot from '../sagas/app/auth/forgot';
 import posts from '../sagas/app/posts';
 import post from '../sagas/app/post';
 import createPost from '../sagas/app/posts/create';
@@ -25,6 +26,7 @@ export default function createReducer(injectedReducers) {
         login,
         register,
         logout,
+        forgot,
       }),
       posts: combineReducers({
         index: posts,

@@ -4,6 +4,7 @@ import { watcher as navigation } from '../sagas/app/navigation';
 import { watcher as login } from '../sagas/app/auth/login';
 import { watcher as logout } from '../sagas/app/auth/logout';
 import { watcher as register } from '../sagas/app/auth/register';
+import { watcher as forgot } from '../sagas/app/auth/forgot';
 import { watcher as posts } from './app/posts';
 import { watcher as post } from './app/post';
 import { watcher as createPost } from './app/posts/create';
@@ -20,8 +21,9 @@ export default function* root() {
     home(),
     login(),
     logout(),
-    navigation(),
     register(),
+    forgot(),
+    navigation(),
     posts(),
     post(),
     publicPosts(),

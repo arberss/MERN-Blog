@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Login from 'pages/Auth/Login';
 import Register from 'pages/Auth/Register';
+import ForgotPw from 'pages/Auth/ForgotPw';
 import LandingPage from 'pages/Landing';
 import { Router, Redirect, Switch, Route } from 'react-router-dom';
 import history from 'utils/history';
@@ -26,6 +27,7 @@ function App(props) {
     user,
     showLoginModal,
     showRegisterModal,
+    showForgotModal,
   } = props;
 
   useEffect(() => {
@@ -80,6 +82,7 @@ function App(props) {
 
       {showLoginModal && <Login />}
       {showRegisterModal && <Register />}
+      {showForgotModal && <ForgotPw />}
     </>
   );
 }
@@ -89,6 +92,7 @@ const mapStateToProps = (state) => ({
   user: state?.app?.me?.index.user,
   showLoginModal: state.app.auth.login.modal,
   showRegisterModal: state.app.auth.register.modal,
+  showForgotModal: state.app.auth.forgot.modal,
 });
 
 const mapDispatchToProps = {
