@@ -1,9 +1,38 @@
-.addFeed {
-  width: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  background-color: white;
+.createPost {
+  &__content {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  &__form {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  &__dropdown {
+    width: 50% !important;
+  }
+
+  .multiSelect {
+    width: 50% !important;
+    margin: 0 !important;
+    margin-top: 3rem !important;
+
+    &__label {
+      font-size: 1.2rem !important;
+    }
+
+    &__text {
+      span {
+        font-size: 1.4rem !important;
+      }
+    }
+  }
 }

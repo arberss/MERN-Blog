@@ -2,7 +2,7 @@ import React from 'react';
 import Sticky from 'react-sticky-el';
 
 const RecommandedTopics = (props) => {
-  const { newClass } = props;
+  const { newClass, categories } = props;
 
   return (
     <div className={`recommandedTopics ${newClass ? newClass : ''}`}>
@@ -13,9 +13,13 @@ const RecommandedTopics = (props) => {
       >
         <div className='recommandedTopics__title'>Recommanded Topics</div>
         <div className='recommandedTopics__topics'>
-          <div className='recommandedTopics__topic'>Technology</div>
-          <div className='recommandedTopics__topic'>Money</div>
-          <div className='recommandedTopics__topic'>Business</div>
+          {categories?.map((category) => {
+            return (
+              <div className='recommandedTopics__topic' key={category?._id}>
+                {category?.category}
+              </div>
+            );
+          })}
         </div>
       </Sticky>
     </div>

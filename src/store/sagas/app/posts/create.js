@@ -20,6 +20,8 @@ const _state = {
     title: '',
     name: '',
     content: '',
+    postStatus: 'Private',
+    categories: [],
     image: null,
   },
   loading: false,

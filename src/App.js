@@ -18,6 +18,8 @@ import PublicPost from 'pages/Post/PublicPost';
 import PrivatePost from 'pages/Post/PrivatePost';
 import Favorites from 'pages/Favorites';
 import Settings from 'pages/Settings';
+import ResetPw from 'pages/Auth/ResetPw';
+import CreatePost from 'pages/Posts/Create/index';
 
 function App(props) {
   const {
@@ -56,6 +58,12 @@ function App(props) {
             path='/posts'
             component={Posts}
           />
+          <ProtectedRoute
+            protectedRole={['USER', 'ADMIN']}
+            exact
+            path='/posts/create'
+            component={CreatePost}
+          />
           <Route exact path='/post/public/:postId' component={PublicPost} />
           <ProtectedRoute
             protectedRole={['USER', 'ADMIN']}
@@ -75,6 +83,7 @@ function App(props) {
             path='/user/settings'
             component={Settings}
           />
+          <Route exact path='/user/reset-password/:token' component={ResetPw} />
           <Redirect to='/' />
         </Switch>
       </Router>

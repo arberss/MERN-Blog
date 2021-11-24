@@ -8,6 +8,7 @@
 // pages
 @import 'pages/LandingPage/index';
 @import 'pages/auth/login';
+@import 'pages/auth/resetpw';
 @import 'pages/Posts/index';
 @import 'pages/Posts/addPost';
 @import 'pages/Posts/recommandedTopics';
@@ -23,3 +24,4 @@
 @import 'components/nav';
 @import 'components/post';
 @import 'components/dropdownmenu';
+@import 'components/dropdown';

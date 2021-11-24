@@ -1,0 +1,19 @@
+.dropdownMenu {
+  padding: 0 !important;
+  margin: 0 !important;
+  margin-top: 2rem !important;
+
+  &__label {
+    font-family: Roboto !important;
+    font-size: 1.3rem !important;
+    color: #7d8c96 !important;
+  }
+
+  &__select {
+    font-size: 1.4rem !important;
+  }
+
+  &__item {
+    font-size: 1.4rem !important;
+  }
+}

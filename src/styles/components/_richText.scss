@@ -1,9 +1,19 @@
 .react-quill {
   position: relative;
-
-  float: left;
   width: 100%;
-  min-height: 200px;
+  min-height: 20rem;
+  margin-top: 3rem;
+
+  &__label {
+    font-family: Roboto;
+    font-size: 1.1rem;
+    color: #7d8c96;
+  }
+
+  &__content {
+    margin-top: 1rem;
+  }
+
   .quill {
     position: relative;
 

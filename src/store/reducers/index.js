@@ -6,6 +6,7 @@ import login from '../sagas/app/auth/login';
 import logout from '../sagas/app/auth/logout';
 import register from '../sagas/app/auth/register';
 import forgot from '../sagas/app/auth/forgot';
+import reset from '../sagas/app/auth/reset';
 import posts from '../sagas/app/posts';
 import post from '../sagas/app/post';
 import createPost from '../sagas/app/posts/create';
@@ -15,6 +16,7 @@ import favorites from '../sagas/app/favorites';
 import likes from '../sagas/app/likes';
 import comments from '../sagas/app/comments';
 import settings from '../sagas/app/settings';
+import categories from '../sagas/app/categories';
 
 export default function createReducer(injectedReducers) {
   return combineReducers({
@@ -27,6 +29,7 @@ export default function createReducer(injectedReducers) {
         register,
         logout,
         forgot,
+        reset,
       }),
       posts: combineReducers({
         index: posts,
@@ -47,6 +50,9 @@ export default function createReducer(injectedReducers) {
       }),
       comments: combineReducers({
         index: comments,
+      }),
+      categories: combineReducers({
+        index: categories,
       }),
       settings: combineReducers({
         index: settings,

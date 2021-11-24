@@ -1,6 +1,5 @@
 import produce from 'immer';
 import { put, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
 import createAction from 'utils/action-creator';
 import { actions as navigation } from '../navigation';
 import Logger from 'utils/logger';
