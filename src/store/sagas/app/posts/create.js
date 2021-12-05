@@ -18,11 +18,10 @@ export const EDIT_INITIAL_VALUES = `${PREFIX}EDIT_INITIAL_VALUES`;
 const _state = {
   initialValues: {
     title: '',
-    name: '',
     content: '',
     postStatus: 'Private',
     categories: [],
-    image: null,
+    image: '',
   },
   loading: false,
   showModal: false,
@@ -43,8 +42,9 @@ const reducer = (state = _state, { type, payload }) =>
         if (!payload?.id) {
           draft.initialValues = {
             title: '',
-            name: '',
             content: '',
+            postStatus: 'Private',
+            categories: [],
             image: null,
           };
         }
@@ -65,10 +65,16 @@ export const actions = {
 };
 
 export const sagas = {
-  *createPost() {
+  *createPost({ payload }) {
     yield put(actions.setLoading(true));
     try {
-      const response = yield axios.get('/post/all');
+      let formData = new FormData();
+      formData.append('imageUrl', payload.values.imageFile);
+      formData.append('title', payload.values.title);
+      formData.append('content', payload.values.content);
+      formData.append('postStatus', payload.values.postStatus);
+      formData.append('categories', payload.values.categories);
+      const response = yield axios.post('/post', formData);
       yield put(actions.createPostSuccess(response?.data));
     } catch (error) {
       logger.error(error);

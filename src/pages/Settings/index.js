@@ -55,7 +55,6 @@ const Settings = (props) => {
             isSubmitting,
           }) => (
             <div className='settings__content'>
-              {console.log(values)}
               <div className='settings__title'>Account Details</div>
               <form className='settings__form' onSubmit={handleSubmit}>
                 <div className='settings__image'>

@@ -1,27 +1,30 @@
 import React from 'react';
-import Sticky from 'react-sticky-el';
 
 const RecommandedTopics = (props) => {
-  const { newClass, categories } = props;
+  const { newClass, categories, handleCategory } = props;
 
   return (
     <div className={`recommandedTopics ${newClass ? newClass : ''}`}>
-      <Sticky
-        boundaryElement='.block'
-        topOffset={40}
-        stickyClassName={'recommandedTopics__sticky'}
-      >
-        <div className='recommandedTopics__title'>Recommanded Topics</div>
-        <div className='recommandedTopics__topics'>
-          {categories?.map((category) => {
-            return (
-              <div className='recommandedTopics__topic' key={category?._id}>
-                {category?.category}
-              </div>
-            );
-          })}
+      <div className='recommandedTopics__title'>Recommanded Topics</div>
+      <div className='recommandedTopics__topics'>
+        <div
+          className='recommandedTopics__topic'
+          onClick={() => handleCategory()}
+        >
+          All
         </div>
-      </Sticky>
+        {categories?.map((category) => {
+          return (
+            <div
+              className='recommandedTopics__topic'
+              key={category?._id}
+              onClick={() => handleCategory(category?._id)}
+            >
+              {category?.category}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

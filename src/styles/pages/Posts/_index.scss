@@ -113,19 +113,33 @@
     display: flex;
   }
 
+  &__content-left {
+    width: 100%;
+    border-right: 1px solid rgb(231, 223, 223);
+    padding-top: 2rem;
+    margin-right: 5rem;
+  }
+
   &__right {
     width: 40%;
+  }
+
+  &__createBtn {
+    margin-top: 2rem;
+    padding: 1rem !important;
+    background-color: rgb(144, 189, 204);
+    color: white;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
   }
 }
 
 .posts__newClass {
-  width: 80% !important;
+  width: 90% !important;
+  margin: 0 !important;
   margin-right: 5rem !important;
-  border-right: 1px solid rgb(231, 223, 223);
 
   .postComp__content {
-    margin-top: 2rem;
-    margin-right: 5rem;
     border-top: 1px solid rgb(231, 223, 223);
   }
 }

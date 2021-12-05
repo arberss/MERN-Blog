@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import InputComponent from 'components/input';
@@ -11,13 +11,22 @@ import RichTextEditor from 'components/RichText';
 import DropDown from 'components/DropDown';
 import MultiSelect from 'components/MultiSelect';
 import Button from 'components/button';
+import InputFile from 'components/input/InputFile';
 
 const validationSchema = yup.object().shape({
   title: yup.string().label('Title').required(),
-  content: yup.string().label('Content').required(),
+  content: yup
+    .string()
+    .label('Content')
+    .test('has text', 'Cannot save an empty note', (value) => {
+      // remove html tags
+      const replacedVal =
+        value !== undefined ? value.replace(/<(.|\n)*?>/g, '') : '';
+      return replacedVal !== '';
+    }),
   postStatus: yup.string().label('Post status').required(),
-  // image: yup.string().label('Image').required(),
-  description: yup.array().label('Description').required(),
+  image: yup.string().label('Image').required(),
+  categories: yup.array().min(1).label('Categories').required(),
 });
 
 export const statusOpt = [
@@ -34,9 +43,21 @@ export const statusOpt = [
 const Create = (props) => {
   const { createPost, initialValues, getCategories, categories } = props;
 
+  const [imageFile, setImageFile] = useState('');
+
   useEffect(() => {
     getCategories();
   }, []);
+
+  const handleImage = (e, setFieldValue) => {
+    if (e.target.files[0]) {
+      setFieldValue('image', 'uploaded');
+      setImageFile(e.currentTarget.files[0]);
+    } else {
+      setFieldValue('image', '');
+      setImageFile('');
+    }
+  };
 
   return (
     <>
@@ -45,7 +66,7 @@ const Create = (props) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values, actions) =>
-          console.log({ values, formActions: actions })
+          createPost({ values: { ...values, imageFile }, formActions: actions })
         }
       >
         {({
@@ -62,8 +83,7 @@ const Create = (props) => {
             <div className='container'>
               <div className='createPost__content'>
                 <div className='createPost__title'>Create Post</div>
-                <form className='createPost__form'>
-                  {console.log(values)}
+                <form className='createPost__form' onSubmit={handleSubmit}>
                   <InputComponent
                     name='title'
                     placeholder='Post Title'
@@ -75,6 +95,7 @@ const Create = (props) => {
                     handleBlur={handleBlur}
                     handleChange={handleChange}
                     touched={touched.title}
+                    className='createPost__nameInput'
                   />
                   <DropDown
                     value={values.postStatus}
@@ -84,19 +105,42 @@ const Create = (props) => {
                       setFieldValue('postStatus', e.target.value)
                     }
                     newClass='createPost__dropdown'
+                    errorClass='errorClass'
+                    errors={errors.postStatus}
+                    touched={touched.postStatus}
                   />
                   <MultiSelect
+                    name='Categories'
                     value={values.categories}
                     label='Categories'
-                    handleChange={(e) =>
-                      setFieldValue('categories', e.target.value)
-                    }
+                    handleChange={(e) => {
+                      setFieldValue('categories', e.target.value);
+                    }}
                     options={categories}
+                    errorClass='errorClass'
+                    errors={errors.categories}
+                    touched={touched.categories}
+                  />
+                  <InputFile
+                    name='image'
+                    placeholder='Insert an image'
+                    type='file'
+                    label='Image'
+                    errorClass='errorClass'
+                    errors={errors.image}
+                    values={imageFile}
+                    handleBlur={handleBlur}
+                    handleChange={(e) => handleImage(e, setFieldValue)}
+                    touched={touched.image}
+                    className='createPost__inputFile'
                   />
                   <RichTextEditor
                     value={values.content}
                     label='Content'
                     onChange={(value) => setFieldValue('content', value)}
+                    errorClass='errorClass'
+                    errors={errors.content}
+                    touched={touched.content}
                   />
                   <Button title='Create' newClass='login__btn' type='submit' />
                 </form>

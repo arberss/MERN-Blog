@@ -4,7 +4,8 @@ import '../../../node_modules/react-quill/dist/quill.snow.css'; // ES6
 import { modules, formats } from './options';
 
 const RichTextEditor = (props) => {
-  const { value, onChange, newClass, label } = props;
+  const { value, onChange, newClass, label, errorClass, errors, touched } =
+    props;
 
   return (
     <div className={`react-quill ${newClass ? newClass : ''}`}>
@@ -19,7 +20,7 @@ const RichTextEditor = (props) => {
           value={value}
         />
       </div>
-      {/* {touched?.[name] && errors?.[name] && <span className={"validation-error"}>{touched[name] && errors[name]}</span>} */}
+      {errors && touched && <span className={errorClass}>{errors}</span>}
     </div>
   );
 };

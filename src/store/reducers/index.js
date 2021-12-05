@@ -10,6 +10,7 @@ import reset from '../sagas/app/auth/reset';
 import posts from '../sagas/app/posts';
 import post from '../sagas/app/post';
 import createPost from '../sagas/app/posts/create';
+import deletePost from '../sagas/app/posts/delete';
 import publicPosts from '../sagas/app/posts/public';
 import me from '../sagas/app/me';
 import favorites from '../sagas/app/favorites';
@@ -35,6 +36,7 @@ export default function createReducer(injectedReducers) {
         index: posts,
         public: publicPosts,
         createPost,
+        deletePost,
       }),
       post: combineReducers({
         index: post,

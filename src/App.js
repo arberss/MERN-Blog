@@ -30,6 +30,7 @@ function App(props) {
     showLoginModal,
     showRegisterModal,
     showForgotModal,
+    clearUserState,
   } = props;
 
   useEffect(() => {
@@ -44,6 +45,7 @@ function App(props) {
       getMe();
     } else {
       setAuthStatus({ isAuth: false, token: null });
+      clearUserState();
     }
   };
 
@@ -106,6 +108,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getMe: meActions.me,
+  clearUserState: meActions.clearUserState,
   setAuthStatus: loginActions.setAuthStatus,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

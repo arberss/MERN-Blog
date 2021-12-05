@@ -9,6 +9,7 @@ import { watcher as reset } from '../sagas/app/auth/reset';
 import { watcher as posts } from './app/posts';
 import { watcher as post } from './app/post';
 import { watcher as createPost } from './app/posts/create';
+import { watcher as deletePost } from './app/posts/delete';
 import { watcher as publicPosts } from './app/posts/public';
 import { watcher as me } from '../sagas/app/me';
 import { watcher as favorites } from '../sagas/app/favorites';
@@ -31,6 +32,7 @@ export default function* root() {
     post(),
     publicPosts(),
     createPost(),
+    deletePost(),
     me(),
     favorites(),
     likes(),

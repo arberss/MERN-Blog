@@ -39,9 +39,23 @@
   &__right {
     width: 50%;
 
+    &-toptitle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     &-title {
       font-size: 3.5rem;
       line-height: 40px;
+    }
+
+    &-postmenu {
+      .DropDownMenu__text {
+        font-size: 2rem;
+        color: black;
+        font-weight: bold;
+      }
     }
 
     &-author {
@@ -101,6 +115,20 @@
       font-size: 1.6rem;
       line-height: 22px;
       margin: 4rem 0 1rem 0;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    &-postImg {
+      margin: 1.5rem 0;
+
+      img {
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+      }
     }
   }
 

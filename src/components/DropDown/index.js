@@ -5,7 +5,16 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 function DropDown(props) {
-  const { value, handleChange, label, options, newClass } = props;
+  const {
+    value,
+    handleChange,
+    label,
+    options,
+    newClass,
+    errors,
+    touched,
+    errorClass,
+  } = props;
 
   return (
     <div>
@@ -37,6 +46,7 @@ function DropDown(props) {
           })}
         </Select>
       </FormControl>
+      {errors && touched && <span className={errorClass}>{errors}</span>}
     </div>
   );
 }

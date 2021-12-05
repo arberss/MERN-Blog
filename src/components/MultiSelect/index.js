@@ -8,7 +8,8 @@ import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 
 const MultiSelect = (props) => {
-  const { value, handleChange, options, label } = props;
+  const { value, handleChange, options, label, errors, touched, errorClass } =
+    props;
 
   return (
     <div>
@@ -41,6 +42,7 @@ const MultiSelect = (props) => {
           ))}
         </Select>
       </FormControl>
+      {errors && touched && <span className={errorClass}>{errors}</span>}
     </div>
   );
 };

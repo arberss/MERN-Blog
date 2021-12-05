@@ -14,6 +14,7 @@ const PREFIX = '@app/me/Index';
 export const FETCH_ME = `${PREFIX}FETCH_ME`;
 export const FETCH_ME_SUCCESS = `${PREFIX}FETCH_ME_SUCCESS`;
 export const UPDATE_ME = `${PREFIX}UPDATE_ME`;
+export const CLEAR_USER_STATE = `${PREFIX}CLEAR_USER_STATE`;
 export const SET_LOADING = `${PREFIX}SET_LOADING`;
 
 const _state = {
@@ -31,6 +32,9 @@ const reducer = (state = _state, { type, payload }) =>
         draft.user.name = payload.name;
         draft.user.email = payload.email;
         draft.user.imageUrl = payload.imageUrl;
+        break;
+      case CLEAR_USER_STATE:
+        draft.user = {};
         break;
       case SET_LOADING:
         draft.loading = payload;
@@ -58,6 +62,7 @@ export const actions = {
   meSuccess: (payload) => createAction(FETCH_ME_SUCCESS, { payload }),
   updateMe: (payload) => createAction(UPDATE_ME, { payload }),
   setLoading: (payload) => createAction(SET_LOADING, { payload }),
+  clearUserState: (payload) => createAction(CLEAR_USER_STATE, { payload }),
 };
 
 export const sagas = {

@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 
 const DropDownMenu = (props) => {
-  const { lists } = props;
+  const { lists, tooltip = '', className } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -20,11 +20,11 @@ const DropDownMenu = (props) => {
   };
 
   return (
-    <div className='DropDownMenu'>
+    <div className={`DropDownMenu ${className || ''}`}>
       <Box sx={styles.content}>
-        <Tooltip title='Account settings'>
+        <Tooltip title={tooltip}>
           <IconButton onClick={handleClick} size='small' sx={{ ml: 2 }}>
-            <span>...</span>
+            <span className='DropDownMenu__text'>...</span>
           </IconButton>
         </Tooltip>
       </Box>

@@ -10,6 +10,7 @@ const logger = new Logger('Public Feeds');
 const PREFIX = '@app/feeds/Public';
 export const FETCH_PUBLIC_POSTS = `${PREFIX}FETCH_PUBLIC_POSTS`;
 export const FETCH_PUBLIC_POSTS_SUCCESS = `${PREFIX}FETCH_PUBLIC_POSTS_SUCCESS`;
+export const DELETE_POST_SUCCESS = `${PREFIX}DELETE_POST_SUCCESS`;
 export const SET_LOADING = `${PREFIX}SET_LOADING`;
 
 const _state = {
@@ -22,6 +23,9 @@ const reducer = (state = _state, { type, payload }) =>
     switch (type) {
       case FETCH_PUBLIC_POSTS_SUCCESS:
         draft.posts = payload;
+        break;
+      case DELETE_POST_SUCCESS:
+        draft.posts = state.posts.filter((post) => post?._id !== payload);
         break;
       case SET_LOADING:
         draft.loading = payload;
@@ -36,6 +40,8 @@ export const actions = {
   fetchPublicPosts: (payload) => createAction(FETCH_PUBLIC_POSTS, { payload }),
   fetchPublicPostsSuccess: (payload) =>
     createAction(FETCH_PUBLIC_POSTS_SUCCESS, { payload }),
+  deletePostSuccess: (payload) =>
+    createAction(DELETE_POST_SUCCESS, { payload }),
   setLoading: (payload) => createAction(SET_LOADING, { payload }),
 };
 
@@ -46,8 +52,6 @@ export const sagas = {
       const response = yield axios.get('/post/public');
 
       yield put(actions.fetchPublicPostsSuccess(response?.data));
-
-      //   yield put(navigation.navigate('/admin/dashboard'));
     } catch (error) {
       logger.error(error);
     } finally {

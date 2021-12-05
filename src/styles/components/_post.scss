@@ -36,8 +36,10 @@
       width: 40%;
 
       &-img {
-        width: 22rem;
-        height: 13rem;
+        width: 12.5rem;
+        height: 9rem;
+        display: block;
+        margin: 0 auto;
       }
     }
 
@@ -49,6 +51,11 @@
       font-size: 2rem;
       font-weight: bold;
       margin: 1rem 0 0.5rem 0;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     &-content {

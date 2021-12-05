@@ -7,6 +7,8 @@ import { actions as postActions } from 'store/sagas/app/posts';
 import { actions as categoryActions } from 'store/sagas/app/categories';
 import { actions as navigateActions } from 'store/sagas/app/navigation';
 import RecommandedTopics from './RecommandedTopics';
+import Button from 'components/button';
+import Sticky from 'react-sticky-el';
 
 const Posts = (props) => {
   const { fetchPosts, posts, getCategories, categories, navigate } = props;
@@ -16,21 +18,37 @@ const Posts = (props) => {
     getCategories();
   }, []);
 
+  const handleCategory = (category) => {
+    fetchPosts(category);
+  };
+
   return (
     <>
       <Nav />
       <main className='posts'>
         <div className='container'>
-          <div
-            className='posts__createBtn'
-            onClick={() => navigate('/posts/create')}
-          >
-            Create Post
-          </div>
           <div className='posts__content'>
-            <PostComp data={posts} title='' newClass='posts__newClass' />
+            <div className='posts__content-left'>
+              <PostComp data={posts} title='' newClass='posts__newClass' />
+            </div>
             <div className='posts__right'>
-              <RecommandedTopics newClass='rmTopics' categories={categories} />
+              <Sticky
+                boundaryElement='.block'
+                topOffset={20}
+                stickyClassName={'recommandedTopics__sticky'}
+              >
+                <Button
+                  title='Write'
+                  newClass='posts__createBtn'
+                  onClick={() => navigate('/posts/create')}
+                  type='button'
+                />
+                <RecommandedTopics
+                  newClass='rmTopics'
+                  categories={categories}
+                  handleCategory={handleCategory}
+                />
+              </Sticky>
             </div>
           </div>
         </div>

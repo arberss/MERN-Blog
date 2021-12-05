@@ -40,7 +40,6 @@ export const actions = {
 export const sagas = {
   *resetPassword({ payload }) {
     yield put(actions.setLoading(true));
-    console.log(payload);
     try {
       const response = yield axios.post(
         `/user/reset-password/${payload?.token}`,

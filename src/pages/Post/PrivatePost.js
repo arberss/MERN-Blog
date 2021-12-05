@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { actions as postActions } from 'store/sagas/app/post';
+import { actions as deletePostActions } from 'store/sagas/app/posts/delete';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as favoriteActions } from 'store/sagas/app/favorites';
 import { actions as likesActions } from 'store/sagas/app/likes';
@@ -15,6 +16,7 @@ import { ReactComponent as FavFilled } from 'assets/img/favorite-filled.svg';
 import { ReactComponent as FavUnfilled } from 'assets/img/favorite-unfilled.svg';
 import CommentModal from './CommentModal/CommentModal';
 import StickyComp from './StickyComponent';
+import DropDownMenu from 'components/DropDownMenu';
 
 const { REACT_APP_WEB_API_IMG_URL } = process.env;
 
@@ -40,6 +42,7 @@ const PrivatePost = (props) => {
     selectComment,
     deleteComment,
     initialValues,
+    deletePost,
   } = props;
 
   useEffect(() => {
@@ -67,6 +70,16 @@ const PrivatePost = (props) => {
       setFavorite(postId);
     }
   };
+
+  const lists = [
+    {
+      name: 'Delete',
+      fn: () => deletePost({ id: post?._id, status: post?.postStatus }),
+    },
+    {
+      name: 'Edit',
+    },
+  ];
 
   const handleLike = (postId, action) => {
     if (!isAuth) {
@@ -133,7 +146,16 @@ const PrivatePost = (props) => {
               <h1>Loading</h1>
             ) : (
               <>
-                <div className='singlePost__right-title'>{post?.title}</div>
+                <div className='singlePost__right-toptitle'>
+                  <div className='singlePost__right-title'>{post?.title}</div>
+                  {user?._id === post?.creator?._id && (
+                    <DropDownMenu
+                      lists={lists}
+                      tooltip='Menu'
+                      className='singlePost__right-postmenu'
+                    />
+                  )}
+                </div>
                 <div className='singlePost__right-author-content'>
                   <div className='singlePost__right-author-info'>
                     {post?.creator?.imageUrl !== null ? (
@@ -152,7 +174,7 @@ const PrivatePost = (props) => {
                         {post?.creator?.name}
                       </div>
                       <div className='singlePost__right-created'>
-                        {moment(post?.createdAt).format('MMM d')}
+                        {moment(post?.createdAt).format('MMM D')}
                       </div>
                     </div>
                   </div>
@@ -164,7 +186,10 @@ const PrivatePost = (props) => {
                     )}
                   </div>
                 </div>
-                <div className='singlePost__right-content'>{post?.content}</div>
+                <div
+                  className='singlePost__right-content'
+                  dangerouslySetInnerHTML={{ __html: post?.content }}
+                ></div>
               </>
             )}
           </div>
@@ -210,6 +235,7 @@ const mapDispatchToProps = {
   clearComments: commentActions.clearComments,
   selectComment: commentActions.selectComment,
   deleteComment: deleteCommentActions.deleteComment,
+  deletePost: deletePostActions.deletePost,
 };
 
 export default connect(

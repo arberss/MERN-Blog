@@ -60,11 +60,10 @@ const PostComp = (props) => {
                     {post?.creator.name}
                   </div>
                   <div className='postComp__post-title'>{post.title}</div>
-                  <div className='postComp__post-content'>{post.content}</div>
                 </div>
                 <div className='postComp__post-bottom'>
                   <div className='postComp__post-date'>
-                    {moment(post.createdAt).format('MMM d')}
+                    {moment(post.createdAt).format('MMM D')}
                   </div>
                   {user?.favorites?.includes(post?._id) ? (
                     <FavFilled
