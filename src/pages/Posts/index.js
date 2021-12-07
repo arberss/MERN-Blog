@@ -11,15 +11,32 @@ import Button from 'components/button';
 import Sticky from 'react-sticky-el';
 
 const Posts = (props) => {
-  const { fetchPosts, posts, getCategories, categories, navigate } = props;
+  const {
+    fetchPosts,
+    posts,
+    getCategories,
+    categories,
+    navigate,
+    page,
+    size,
+    totalSize,
+    editPage,
+  } = props;
 
   useEffect(() => {
-    fetchPosts();
     getCategories();
   }, []);
 
+  useEffect(() => {
+    fetchPosts();
+  }, [page]);
+
   const handleCategory = (category) => {
     fetchPosts(category);
+  };
+
+  const handlePagination = (pg) => {
+    editPage(pg.selected + 1);
   };
 
   return (
@@ -29,7 +46,12 @@ const Posts = (props) => {
         <div className='container'>
           <div className='posts__content'>
             <div className='posts__content-left'>
-              <PostComp data={posts} title='' newClass='posts__newClass' />
+              <PostComp
+                data={posts}
+                title=''
+                pagination={{ page, size, totalSize, handlePagination }}
+                newClass='posts__newClass'
+              />
             </div>
             <div className='posts__right'>
               <Sticky
@@ -59,11 +81,15 @@ const Posts = (props) => {
 
 const mapStateToProps = (state) => ({
   posts: state.app.posts.index.posts,
+  page: state.app.posts.index.page,
+  size: state.app.posts.index.size,
+  totalSize: state.app.posts.index.totalSize,
   categories: state.app.categories.index.categories,
 });
 
 const mapDispatchToProps = {
   fetchPosts: postActions.fetchPosts,
+  editPage: postActions.editPage,
   getCategories: categoryActions.getCategories,
   navigate: navigateActions.navigate,
 };

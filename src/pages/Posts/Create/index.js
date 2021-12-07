@@ -5,6 +5,7 @@ import InputComponent from 'components/input';
 import Nav from 'components/Nav';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { actions as postActions } from 'store/sagas/app/post';
 import { actions as createPostActions } from 'store/sagas/app/posts/create';
 import { actions as categoryActions } from 'store/sagas/app/categories';
 import RichTextEditor from 'components/RichText';
@@ -41,13 +42,30 @@ export const statusOpt = [
 ];
 
 const Create = (props) => {
-  const { createPost, initialValues, getCategories, categories } = props;
+  const {
+    createPost,
+    initialValues,
+    getCategories,
+    categories,
+    match,
+    fetchPost,
+    clearInitValues,
+  } = props;
 
   const [imageFile, setImageFile] = useState('');
 
   useEffect(() => {
     getCategories();
+
+    return () => clearInitValues();
   }, []);
+
+  useEffect(() => {
+    if (match?.params?.postId) {
+      fetchPost(match?.params?.postId);
+      setImageFile(initialValues.image);
+    }
+  }, [match?.params?.postId]);
 
   const handleImage = (e, setFieldValue) => {
     if (e.target.files[0]) {
@@ -63,10 +81,15 @@ const Create = (props) => {
     <>
       <Nav />
       <Formik
+        enableReinitialize={true}
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values, actions) =>
-          createPost({ values: { ...values, imageFile }, formActions: actions })
+          createPost({
+            values: { ...values, imageFile },
+            formActions: actions,
+            postId: match?.params?.postId,
+          })
         }
       >
         {({
@@ -154,6 +177,7 @@ const Create = (props) => {
 };
 
 const mapStateToProps = (state) => ({
+  post: state.app.post.index.post,
   initialValues: state?.app?.posts?.createPost?.initialValues,
   categories: state?.app?.categories?.index?.categories,
 });
@@ -161,6 +185,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   createPost: createPostActions.createPost,
   getCategories: categoryActions.getCategories,
+  fetchPost: postActions.fetchPost,
+  clearInitValues: createPostActions.clearInitValues,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Create));

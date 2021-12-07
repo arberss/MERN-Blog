@@ -5,6 +5,7 @@ import { actions as postActions } from 'store/sagas/app/post';
 import { actions as deletePostActions } from 'store/sagas/app/posts/delete';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as favoriteActions } from 'store/sagas/app/favorites';
+import { actions as navigateActions } from 'store/sagas/app/navigation';
 import { actions as likesActions } from 'store/sagas/app/likes';
 import { actions as commentActions } from 'store/sagas/app/comments';
 import { actions as deleteCommentActions } from 'store/sagas/app/comments/delete';
@@ -43,6 +44,7 @@ const PublicPost = (props) => {
     deleteComment,
     initialValues,
     deletePost,
+    navigate,
   } = props;
 
   useEffect(() => {
@@ -79,6 +81,7 @@ const PublicPost = (props) => {
     },
     {
       name: 'Edit',
+      fn: () => navigate(`/posts/update/${post?._id}`),
     },
   ];
 
@@ -249,6 +252,7 @@ const mapDispatchToProps = {
   selectComment: commentActions.selectComment,
   deleteComment: deleteCommentActions.deleteComment,
   deletePost: deletePostActions.deletePost,
+  navigate: navigateActions.navigate,
 };
 
 export default connect(

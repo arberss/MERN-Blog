@@ -6,6 +6,7 @@ import { actions as deletePostActions } from 'store/sagas/app/posts/delete';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as favoriteActions } from 'store/sagas/app/favorites';
 import { actions as likesActions } from 'store/sagas/app/likes';
+import { actions as navigateActions } from 'store/sagas/app/navigation';
 import { actions as commentActions } from 'store/sagas/app/comments';
 import { actions as deleteCommentActions } from 'store/sagas/app/comments/delete';
 import Nav from 'components/Nav';
@@ -43,6 +44,7 @@ const PrivatePost = (props) => {
     deleteComment,
     initialValues,
     deletePost,
+    navigate,
   } = props;
 
   useEffect(() => {
@@ -71,6 +73,10 @@ const PrivatePost = (props) => {
     }
   };
 
+  const handleEdit = () => {
+    navigate(`/posts/update/${post?._id}`);
+  };
+
   const lists = [
     {
       name: 'Delete',
@@ -78,6 +84,7 @@ const PrivatePost = (props) => {
     },
     {
       name: 'Edit',
+      fn: () => handleEdit(),
     },
   ];
 
@@ -236,6 +243,7 @@ const mapDispatchToProps = {
   selectComment: commentActions.selectComment,
   deleteComment: deleteCommentActions.deleteComment,
   deletePost: deletePostActions.deletePost,
+  navigate: navigateActions.navigate,
 };
 
 export default connect(

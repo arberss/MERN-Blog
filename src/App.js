@@ -66,6 +66,12 @@ function App(props) {
             path='/posts/create'
             component={CreatePost}
           />
+          <ProtectedRoute
+            protectedRole={['USER', 'ADMIN']}
+            exact
+            path='/posts/update/:postId'
+            component={CreatePost}
+          />
           <Route exact path='/post/public/:postId' component={PublicPost} />
           <ProtectedRoute
             protectedRole={['USER', 'ADMIN']}

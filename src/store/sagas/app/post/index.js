@@ -2,6 +2,7 @@ import produce from 'immer';
 import { put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import createAction from 'utils/action-creator';
+import { actions as createPostActions } from '../posts/create';
 import Logger from 'utils/logger';
 import axios from 'utils/axios';
 import { LIKE_POST_SUCCESS, UNLIKE_POST_SUCCESS } from '../likes';
@@ -106,6 +107,14 @@ export const sagas = {
     try {
       const response = yield axios.get(`/post/${payload?.payload}`);
       yield put(actions.fetchPostSuccess(response?.data));
+      const initValues = {
+        title: response?.data?.title,
+        content: response?.data?.content,
+        postStatus: response?.data?.postStatus,
+        categories: response?.data?.categories,
+        image: response?.data?.imageUrl,
+      };
+      yield put(createPostActions.editInitValues(initValues));
     } catch (error) {
       logger.error(error);
     } finally {

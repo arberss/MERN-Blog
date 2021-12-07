@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as favoriteActions } from 'store/sagas/app/favorites';
 import { actions as navigationActions } from 'store/sagas/app/navigation';
+import ReactPaginate from 'react-paginate';
 
 const PostComp = (props) => {
   const {
@@ -19,7 +20,9 @@ const PostComp = (props) => {
     newClass,
     setFavorite,
     user,
+    pagination,
   } = props;
+  const { page, size, totalSize, handlePagination } = pagination || {};
 
   const { REACT_APP_WEB_API_IMG_URL } = process.env;
 
@@ -91,6 +94,17 @@ const PostComp = (props) => {
           );
         })}
       </div>
+      {pagination && (
+        <ReactPaginate
+          breakLabel='...'
+          nextLabel='next >'
+          onPageChange={handlePagination}
+          pageRangeDisplayed={5}
+          pageCount={Math.ceil(totalSize / size)}
+          previousLabel='< previous'
+          renderOnZeroPageCount={null}
+        />
+      )}
     </div>
   );
 };
