@@ -11,6 +11,7 @@ import { watcher as post } from './app/post';
 import { watcher as createPost } from './app/posts/create';
 import { watcher as deletePost } from './app/posts/delete';
 import { watcher as publicPosts } from './app/posts/public';
+import { watcher as myPosts } from './app/posts/myPosts';
 import { watcher as me } from '../sagas/app/me';
 import { watcher as favorites } from '../sagas/app/favorites';
 import { watcher as likes } from '../sagas/app/likes';
@@ -18,6 +19,7 @@ import { watcher as comments } from '../sagas/app/comments';
 import { watcher as deleteComment } from '../sagas/app/comments/delete';
 import { watcher as settings } from '../sagas/app/settings';
 import { watcher as categories } from '../sagas/app/categories';
+import { watcher as notifications } from '../sagas/app/notifications';
 
 export default function* root() {
   yield all([
@@ -33,6 +35,7 @@ export default function* root() {
     publicPosts(),
     createPost(),
     deletePost(),
+    myPosts(),
     me(),
     favorites(),
     likes(),
@@ -40,5 +43,6 @@ export default function* root() {
     deleteComment(),
     settings(),
     categories(),
+    notifications(),
   ]);
 }

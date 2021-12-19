@@ -8,11 +8,23 @@ import Header from './Header';
 import PostComp from 'components/Post';
 
 const LandingPage = (props) => {
-  const { navigate, fetchPublicPosts, publicPosts } = props;
+  const {
+    navigate,
+    fetchPublicPosts,
+    publicPosts,
+    editPage,
+    page,
+    size,
+    totalSize,
+  } = props;
 
   useEffect(() => {
     fetchPublicPosts();
-  }, []);
+  }, [page]);
+
+  const handlePagination = (pg) => {
+    editPage(pg.selected + 1);
+  };
 
   return (
     <>
@@ -20,7 +32,11 @@ const LandingPage = (props) => {
       <main className='landing'>
         <Header />
         <div className='container'>
-          <PostComp data={publicPosts} title='Public Posts' />
+          <PostComp
+            data={publicPosts}
+            title='Public Posts'
+            pagination={{ page, size, totalSize, handlePagination }}
+          />
         </div>
       </main>
     </>
@@ -29,11 +45,15 @@ const LandingPage = (props) => {
 
 const mapStateToProps = (state) => ({
   publicPosts: state?.app?.posts.public.posts,
+  page: state.app.posts.public.page,
+  size: state.app.posts.public.size,
+  totalSize: state.app.posts.public.totalSize,
 });
 
 const mapDispatchToProps = {
   navigate: navigation.navigate,
   fetchPublicPosts: publicPostsActions.fetchPublicPosts,
+  editPage: publicPostsActions.editPage,
 };
 
 export default connect(

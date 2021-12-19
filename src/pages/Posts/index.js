@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { actions as postActions } from 'store/sagas/app/posts';
 import { actions as categoryActions } from 'store/sagas/app/categories';
+import { actions as createPostActions } from 'store/sagas/app/posts/create';
 import { actions as navigateActions } from 'store/sagas/app/navigation';
 import RecommandedTopics from './RecommandedTopics';
 import Button from 'components/button';
@@ -21,6 +22,9 @@ const Posts = (props) => {
     size,
     totalSize,
     editPage,
+    selectCategory,
+    categorySelected,
+    clearInitValues,
   } = props;
 
   useEffect(() => {
@@ -28,11 +32,12 @@ const Posts = (props) => {
   }, []);
 
   useEffect(() => {
-    fetchPosts();
-  }, [page]);
+    fetchPosts(categorySelected);
+  }, [page, categorySelected]);
 
   const handleCategory = (category) => {
-    fetchPosts(category);
+    editPage(1);
+    selectCategory(category);
   };
 
   const handlePagination = (pg) => {
@@ -62,7 +67,10 @@ const Posts = (props) => {
                 <Button
                   title='Write'
                   newClass='posts__createBtn'
-                  onClick={() => navigate('/posts/create')}
+                  onClick={() => {
+                    navigate('/posts/create');
+                    clearInitValues();
+                  }}
                   type='button'
                 />
                 <RecommandedTopics
@@ -84,6 +92,7 @@ const mapStateToProps = (state) => ({
   page: state.app.posts.index.page,
   size: state.app.posts.index.size,
   totalSize: state.app.posts.index.totalSize,
+  categorySelected: state.app.posts.index.categorySelected,
   categories: state.app.categories.index.categories,
 });
 
@@ -91,7 +100,9 @@ const mapDispatchToProps = {
   fetchPosts: postActions.fetchPosts,
   editPage: postActions.editPage,
   getCategories: categoryActions.getCategories,
+  selectCategory: postActions.selectCategory,
   navigate: navigateActions.navigate,
+  clearInitValues: createPostActions.clearInitValues,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Posts));

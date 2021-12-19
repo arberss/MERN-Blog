@@ -12,6 +12,8 @@ import ProtectedRoute from 'components/ProtectedRoute';
 import { getCurrentUser } from 'utils/currentUser';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as meActions } from 'store/sagas/app/me';
+import { actions as socketActions } from 'store/sagas/app/socket';
+import { actions as notificationActions } from 'store/sagas/app/notifications';
 import { connect } from 'react-redux';
 import Posts from 'pages/Posts';
 import PublicPost from 'pages/Post/PublicPost';
@@ -20,22 +22,49 @@ import Favorites from 'pages/Favorites';
 import Settings from 'pages/Settings';
 import ResetPw from 'pages/Auth/ResetPw';
 import CreatePost from 'pages/Posts/Create/index';
+import { io } from 'socket.io-client';
 
 function App(props) {
   const {
     getMe,
     setAuthStatus,
     isAuth,
-    user,
     showLoginModal,
     showRegisterModal,
     showForgotModal,
     clearUserState,
+    connectSocket,
+    user,
+    getNotifications,
+    addNotification,
   } = props;
 
   useEffect(() => {
     checkUser();
   }, [isAuth]);
+
+  useEffect(() => {
+    const socket = io('http://localhost:8080');
+
+    // client-side
+    socket.on('connect', () => {
+      console.log('connected');
+      connectSocket(socket);
+
+      socket.emit('newUser', {
+        userId: user?._id,
+        socketId: socket.id,
+        userName: user?.name,
+      });
+      socket.on('newNotification', (data) => {
+        addNotification(data);
+      });
+
+      socket.on('disconnect', () => {
+        console.log('user disconnect');
+      });
+    });
+  }, [user]);
 
   const checkUser = () => {
     const user = getCurrentUser();
@@ -43,6 +72,7 @@ function App(props) {
     if (user) {
       setAuthStatus({ isAuth: true, token: user.token });
       getMe();
+      getNotifications();
     } else {
       setAuthStatus({ isAuth: false, token: null });
       clearUserState();
@@ -116,5 +146,8 @@ const mapDispatchToProps = {
   getMe: meActions.me,
   clearUserState: meActions.clearUserState,
   setAuthStatus: loginActions.setAuthStatus,
+  connectSocket: socketActions.connectSocketSuccess,
+  getNotifications: notificationActions.getNotifications,
+  addNotification: notificationActions.addNotification,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));

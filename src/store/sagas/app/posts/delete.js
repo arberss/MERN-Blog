@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import createAction from 'utils/action-creator';
 import { actions as postActions } from './index';
 import { actions as publicPostsActions } from './public';
+import { actions as myPostsActions } from './myPosts';
 import { actions as navigateActions } from '../navigation';
 import Logger from 'utils/logger';
 import axios from 'utils/axios';
@@ -44,11 +45,16 @@ export const sagas = {
     try {
       yield axios.delete(`/post/${payload?.id}`);
 
-      yield put(postActions.deletePostSuccess(payload?.id));
       if (payload?.status?.toLowerCase() === 'public') {
         yield put(publicPostsActions.deletePostSuccess(payload?.id));
+        yield put(navigateActions.navigate('/posts'));
+      } else if (payload?.status === 'myPost') {
+        yield put(myPostsActions.deletePostSuccess(payload?.id));
+      } else {
+        yield put(postActions.deletePostSuccess(payload?.id));
+        yield put(navigateActions.navigate('/posts'));
       }
-      yield put(navigateActions.navigate('/posts'));
+
       toast.success('The post is deleted succesfully.', {
         position: 'top-right',
         autoClose: 3000,

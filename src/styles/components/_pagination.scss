@@ -1,0 +1,20 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  li {
+    margin-right: 6px;
+    border: 1px solid #cecece;
+    cursor: pointer;
+
+    a {
+      display: block;
+      font-size: 1.2rem;
+      padding: 6px;
+    }
+  }
+
+  &__active {
+    border: 1px solid green !important;
+  }
+}

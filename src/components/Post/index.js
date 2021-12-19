@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as favoriteActions } from 'store/sagas/app/favorites';
 import { actions as navigationActions } from 'store/sagas/app/navigation';
-import ReactPaginate from 'react-paginate';
+import Pagination from 'components/Pagination';
 
 const PostComp = (props) => {
   const {
@@ -21,6 +21,9 @@ const PostComp = (props) => {
     setFavorite,
     user,
     pagination,
+    withActions = false,
+    editFn,
+    deleteFn,
   } = props;
   const { page, size, totalSize, handlePagination } = pagination || {};
 
@@ -90,19 +93,31 @@ const PostComp = (props) => {
                   />
                 )}
               </div>
+              {withActions && (
+                <div className='postComp__actions'>
+                  <div
+                    className='postComp__actions-btn postComp__actions-edit'
+                    onClick={() => editFn(post?._id)}
+                  >
+                    Edit
+                  </div>
+                  <div
+                    className='postComp__actions-btn postComp__actions-delete'
+                    onClick={() => deleteFn(post?._id, 'myPost')}
+                  >
+                    Delete
+                  </div>
+                </div>
+              )}
             </div>
           );
         })}
       </div>
-      {pagination && (
-        <ReactPaginate
-          breakLabel='...'
-          nextLabel='next >'
-          onPageChange={handlePagination}
-          pageRangeDisplayed={5}
+      {pagination && data?.length > 0 && (
+        <Pagination
+          handlePagination={handlePagination}
           pageCount={Math.ceil(totalSize / size)}
-          previousLabel='< previous'
-          renderOnZeroPageCount={null}
+          forcePage={page}
         />
       )}
     </div>

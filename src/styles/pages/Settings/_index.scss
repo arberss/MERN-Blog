@@ -1,4 +1,31 @@
 .settings {
+  &__tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+
+    &-btn {
+      padding: 1.5rem 4rem;
+      border: 1px solid green;
+      color: black;
+      font-size: 1.4rem;
+      cursor: pointer;
+
+      &:first-of-type {
+        margin-right: 20px;
+      }
+    }
+
+    &-active {
+      background-color: green;
+      color: white;
+    }
+  }
+}
+
+.profile {
   &__content {
     width: 60%;
     margin: 0 auto;

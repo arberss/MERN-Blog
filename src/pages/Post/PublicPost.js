@@ -45,6 +45,7 @@ const PublicPost = (props) => {
     initialValues,
     deletePost,
     navigate,
+    socket,
   } = props;
 
   useEffect(() => {
@@ -100,6 +101,17 @@ const PublicPost = (props) => {
     } else {
       if (action === 'like') {
         likePost(postId);
+
+        const checkLike = post?.likes?.find((like) => like?.user === user?._id);
+        if (!checkLike) {
+          socket.emit('sendNotification', {
+            socketId: socket.id,
+            userId: user?._id,
+            userName: user?.name,
+            to: post?.creator?._id,
+            post: { id: post?._id, postStatus: post?.postStatus },
+          });
+        }
       } else {
         unlikePost(postId);
       }
@@ -237,6 +249,7 @@ const mapStateToProps = (state) => ({
   initialValues: state?.app?.comments?.index?.initialValues,
   comment: state?.app?.comments?.index?.comment,
   showCommentModal: state?.app?.comments?.index?.showModal,
+  socket: state?.app?.socket?.index?.socket,
 });
 
 const mapDispatchToProps = {

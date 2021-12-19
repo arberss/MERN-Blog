@@ -60,12 +60,14 @@ const Create = (props) => {
     return () => clearInitValues();
   }, []);
 
+  const postId = match?.params?.postId;
+
   useEffect(() => {
-    if (match?.params?.postId) {
-      fetchPost(match?.params?.postId);
+    if (postId) {
+      fetchPost(postId);
       setImageFile(initialValues.image);
     }
-  }, [match?.params?.postId]);
+  }, [postId]);
 
   const handleImage = (e, setFieldValue) => {
     if (e.target.files[0]) {
@@ -76,6 +78,8 @@ const Create = (props) => {
       setImageFile('');
     }
   };
+
+  console.log(initialValues);
 
   return (
     <>
@@ -105,7 +109,9 @@ const Create = (props) => {
           <div className='createPost'>
             <div className='container'>
               <div className='createPost__content'>
-                <div className='createPost__title'>Create Post</div>
+                <div className='createPost__title'>
+                  {`${postId ? 'Update' : 'Create'}`} Post
+                </div>
                 <form className='createPost__form' onSubmit={handleSubmit}>
                   <InputComponent
                     name='title'
@@ -165,7 +171,11 @@ const Create = (props) => {
                     errors={errors.content}
                     touched={touched.content}
                   />
-                  <Button title='Create' newClass='login__btn' type='submit' />
+                  <Button
+                    title={`${postId ? 'Update' : 'Create'}`}
+                    newClass='login__btn'
+                    type='submit'
+                  />
                 </form>
               </div>
             </div>

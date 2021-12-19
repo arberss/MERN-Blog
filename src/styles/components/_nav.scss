@@ -73,3 +73,16 @@
     margin-left: 0 !important;
   }
 }
+
+.notification {
+  margin-right: 1.4rem;
+
+  &__msg {
+    font-size: 1.2rem !important;
+  }
+
+  .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+    min-width: unset !important;
+    padding: 0 !important;
+  }
+}

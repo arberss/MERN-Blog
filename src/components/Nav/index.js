@@ -5,8 +5,8 @@ import { actions as loginAction } from 'store/sagas/app/auth/login';
 import { actions as registerAction } from 'store/sagas/app/auth/register';
 import { actions as navigation } from 'store/sagas/app/navigation';
 import UserMenu from './UserMenu';
-import { ReactComponent as NotificationIcon } from 'assets/img/notifications.svg';
 import { ReactComponent as BookmarkIcon } from 'assets/img/bookmark.svg';
+import Notification from 'components/Notification';
 
 const Nav = (props) => {
   const {
@@ -16,6 +16,7 @@ const Nav = (props) => {
     isAuth,
     routePaths = ['/posts'],
     match,
+    notifications,
   } = props;
 
   return (
@@ -44,7 +45,7 @@ const Nav = (props) => {
                   className='nav__authIcon'
                   onClick={() => navigate('/post/favorites/')}
                 />
-                <NotificationIcon className='nav__authIcon' />
+                <Notification data={notifications} navigate={navigate} />
                 <UserMenu />
               </>
             )}
@@ -57,6 +58,7 @@ const Nav = (props) => {
 
 const mapStateToProps = (state) => ({
   isAuth: state?.app?.auth?.login?.isAuth,
+  notifications: state?.app?.notifications?.index?.notifications,
 });
 
 const mapDispatchToProps = {

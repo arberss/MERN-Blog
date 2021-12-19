@@ -82,4 +82,20 @@
       cursor: pointer;
     }
   }
+
+  &__actions {
+    &-btn {
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    &-edit {
+      margin-bottom: 1rem;
+      color: green;
+    }
+
+    &-delete {
+      color: orangered;
+    }
+  }
 }

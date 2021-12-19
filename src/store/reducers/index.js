@@ -12,12 +12,15 @@ import post from '../sagas/app/post';
 import createPost from '../sagas/app/posts/create';
 import deletePost from '../sagas/app/posts/delete';
 import publicPosts from '../sagas/app/posts/public';
+import myPosts from '../sagas/app/posts/myPosts';
 import me from '../sagas/app/me';
 import favorites from '../sagas/app/favorites';
 import likes from '../sagas/app/likes';
 import comments from '../sagas/app/comments';
 import settings from '../sagas/app/settings';
 import categories from '../sagas/app/categories';
+import socket from '../sagas/app/socket';
+import notifications from '../sagas/app/notifications';
 
 export default function createReducer(injectedReducers) {
   return combineReducers({
@@ -37,6 +40,7 @@ export default function createReducer(injectedReducers) {
         public: publicPosts,
         createPost,
         deletePost,
+        myPosts,
       }),
       post: combineReducers({
         index: post,
@@ -58,6 +62,12 @@ export default function createReducer(injectedReducers) {
       }),
       settings: combineReducers({
         index: settings,
+      }),
+      socket: combineReducers({
+        index: socket,
+      }),
+      notifications: combineReducers({
+        index: notifications,
       }),
     }),
     ...injectedReducers,

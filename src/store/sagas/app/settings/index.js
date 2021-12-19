@@ -13,6 +13,7 @@ export const UPDATE_USER = `${PREFIX}UPDATE_USER`;
 export const UPDATE_USER_SUCCESS = `${PREFIX}UPDATE_USER_SUCCESS`;
 export const SET_USER_INFO = `${PREFIX}SET_USER_INFO`;
 export const SET_LOADING = `${PREFIX}SET_LOADING`;
+export const SET_ACTIVE_TAB = `${PREFIX}SET_ACTIVE_TAB`;
 
 const _state = {
   initialValues: {
@@ -22,6 +23,7 @@ const _state = {
     password: '',
     confirmPassword: '',
   },
+  activeTab: 'profile',
   loading: false,
 };
 
@@ -40,6 +42,9 @@ const reducer = (state = _state, { type, payload }) =>
         draft.initialValues.password = '';
         draft.initialValues.confirmPassword = '';
         break;
+      case SET_ACTIVE_TAB:
+        draft.activeTab = payload;
+        break;
       case SET_LOADING:
         draft.loading = payload;
         break;
@@ -55,6 +60,7 @@ export const actions = {
     createAction(UPDATE_USER_SUCCESS, { payload }),
   setUserInfo: (payload) => createAction(SET_USER_INFO, { payload }),
   setLoading: (payload) => createAction(SET_LOADING, { payload }),
+  setActiveTab: (payload) => createAction(SET_ACTIVE_TAB, { payload }),
 };
 
 export const sagas = {
