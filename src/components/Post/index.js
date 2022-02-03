@@ -9,6 +9,7 @@ import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as favoriteActions } from 'store/sagas/app/favorites';
 import { actions as navigationActions } from 'store/sagas/app/navigation';
 import Pagination from 'components/Pagination';
+import Loader from 'components/Loader';
 
 const PostComp = (props) => {
   const {
@@ -24,6 +25,7 @@ const PostComp = (props) => {
     withActions = false,
     editFn,
     deleteFn,
+    loading,
   } = props;
   const { page, size, totalSize, handlePagination } = pagination || {};
 
@@ -54,6 +56,7 @@ const PostComp = (props) => {
     <div className={`postComp ${newClass ? newClass : ''}`}>
       <div className='postComp__title'>{title}</div>
       <div className='postComp__content'>
+        {loading && <Loader />}
         {data?.map((post) => {
           return (
             <div className='postComp__post' key={post._id}>

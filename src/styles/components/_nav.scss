@@ -76,6 +76,17 @@
 
 .notification {
   margin-right: 1.4rem;
+  position: relative;
+
+  &__red {
+    width: 5px;
+    height: 5px;
+    background-color: orangered;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+  }
 
   &__msg {
     font-size: 1.2rem !important;

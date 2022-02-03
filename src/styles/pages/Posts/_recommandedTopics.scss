@@ -22,8 +22,13 @@
     margin-top: 1rem;
     margin-right: 1rem;
     background-color: rgba(242, 242, 242, 1);
+    border: 1px solid transparent;
     border-radius: 2rem;
     font-size: 1.2rem;
     cursor: pointer;
+
+    &-active {
+      border: 1px solid green;
+    }
   }
 }

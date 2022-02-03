@@ -10,6 +10,8 @@ const PREFIX = '@app/notification/Index';
 export const GET_NOTIFICATIONS = `${PREFIX}GET_NOTIFICATIONS`;
 export const GET_NOTIFICATIONS_SUCCESS = `${PREFIX}GET_NOTIFICATIONS_SUCCESS`;
 export const ADD_NOTIFICATION = `${PREFIX}ADD_NOTIFICATION`;
+export const READ_NOTIFICATION = `${PREFIX}READ_NOTIFICATION`;
+export const READ_NOTIFICATION_SUCCESS = `${PREFIX}READ_NOTIFICATION_SUCCESS`;
 export const SET_LOADING = `${PREFIX}SET_LOADING`;
 
 const _state = {
@@ -24,7 +26,15 @@ const reducer = (state = _state, { type, payload }) =>
         draft.notifications = payload;
         break;
       case ADD_NOTIFICATION:
-        draft.notifications = [...state.notifications, payload];
+        draft.notifications = [payload, ...state.notifications];
+        break;
+      case READ_NOTIFICATION_SUCCESS:
+        draft.notifications = state.notifications.map((item) => {
+          return {
+            ...item,
+            isRead: true,
+          };
+        });
         break;
       case SET_LOADING:
         draft.loading = payload;
@@ -40,6 +50,9 @@ export const actions = {
   getNotificationsSuccess: (payload) =>
     createAction(GET_NOTIFICATIONS_SUCCESS, { payload }),
   addNotification: (payload) => createAction(ADD_NOTIFICATION, { payload }),
+  readNotification: (payload) => createAction(READ_NOTIFICATION, { payload }),
+  readNotificationSuccess: (payload) =>
+    createAction(READ_NOTIFICATION_SUCCESS, { payload }),
   setLoading: (payload) => createAction(SET_LOADING, { payload }),
 };
 
@@ -56,8 +69,18 @@ export const sagas = {
       console.log('ERRRRORII', error);
     }
   },
+  *readNotification() {
+    try {
+      const response = yield axios.put('/user/notifications');
+      yield put(actions.readNotificationSuccess(response?.data));
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('ERRRRORII', error);
+    }
+  },
 };
 
 export const watcher = function* w() {
   yield takeLatest(GET_NOTIFICATIONS, sagas.getNotifications);
+  yield takeLatest(READ_NOTIFICATION, sagas.readNotification);
 };

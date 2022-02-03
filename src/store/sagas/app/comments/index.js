@@ -116,6 +116,7 @@ export const actions = {
 
 export const sagas = {
   *getComments({ payload }) {
+    yield put(actions.setLoading(true));
     try {
       const { comments } = yield select((state) => state?.app?.comments?.index);
 
@@ -123,6 +124,7 @@ export const sagas = {
         const response = yield axios.get(`/post/comments/` + payload);
         yield put(actions.getCommentsSuccess(response?.data?.data));
       }
+      yield put(actions.setLoading(false));
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('ERRRRORII', error);

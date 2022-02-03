@@ -25,6 +25,7 @@ const Posts = (props) => {
     selectCategory,
     categorySelected,
     clearInitValues,
+    loading,
   } = props;
 
   useEffect(() => {
@@ -56,6 +57,7 @@ const Posts = (props) => {
                 title=''
                 pagination={{ page, size, totalSize, handlePagination }}
                 newClass='posts__newClass'
+                loading={loading}
               />
             </div>
             <div className='posts__right'>
@@ -77,6 +79,7 @@ const Posts = (props) => {
                   newClass='rmTopics'
                   categories={categories}
                   handleCategory={handleCategory}
+                  categorySelected={categorySelected}
                 />
               </Sticky>
             </div>
@@ -89,6 +92,7 @@ const Posts = (props) => {
 
 const mapStateToProps = (state) => ({
   posts: state.app.posts.index.posts,
+  loading: state.app.posts.index.loading,
   page: state.app.posts.index.page,
   size: state.app.posts.index.size,
   totalSize: state.app.posts.index.totalSize,

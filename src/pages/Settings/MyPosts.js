@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { actions as myPostActions } from 'store/sagas/app/posts/myPosts';
 import { actions as deletePost } from 'store/sagas/app/posts/delete';
 import { actions as navigateActions } from 'store/sagas/app/navigation';
 import PostComp from 'components/Post';
-import { useEffect } from 'react';
+import Loader from 'components/Loader';
 
 const MyPosts = (props) => {
-  const { fetchMyPosts, posts, navigate, deletePost } = props;
+  const { fetchMyPosts, posts, navigate, deletePost, loading } = props;
 
   useEffect(() => {
     fetchMyPosts();
@@ -29,12 +29,14 @@ const MyPosts = (props) => {
       withActions
       editFn={editFn}
       deleteFn={deleteFn}
+      loading={loading}
     />
   );
 };
 
 const mapStateToProps = (state) => ({
   posts: state?.app?.posts?.myPosts.posts,
+  loading: state?.app?.posts?.myPosts.loading,
 });
 const mapDispatchToProps = {
   fetchMyPosts: myPostActions.fetchMyPosts,

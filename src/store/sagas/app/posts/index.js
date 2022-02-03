@@ -22,7 +22,10 @@ const _state = {
   page: 1,
   size: 2,
   totalSize: 1,
-  categorySelected: 'all',
+  categorySelected: {
+    name: 'All',
+    id: null,
+  },
   loading: false,
 };
 
@@ -76,9 +79,13 @@ export const sagas = {
     try {
       const { page, size } = yield select((state) => state.app.posts.index);
 
+      console.log('payload', payload);
+
       const response = yield axios.get(
         `/post/all/${
-          payload !== 'all' && payload !== undefined ? payload : ''
+          payload?.name !== 'All' && payload?.name !== undefined
+            ? payload?.id
+            : ''
         }?page=${page}&size=${size}&search=`
       );
       yield put(actions.fetchPostsSuccess(response?.data));

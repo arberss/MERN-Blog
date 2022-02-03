@@ -5,16 +5,19 @@ import MenuItem from '@mui/material/MenuItem';
 import { ReactComponent as NotificationIcon } from 'assets/img/notifications.svg';
 
 const Notification = (props) => {
-  const { navigate, className, fill = '#757575', data } = props;
+  const { navigate, className, fill = '#757575', data, readNotification } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
+    readNotification();
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const checkUnRead = data.some((dt) => dt.isRead === false);
 
   return (
     <div className={`notification ${className || ''}`}>
@@ -26,6 +29,7 @@ const Notification = (props) => {
         onClick={handleClick}
       >
         <NotificationIcon fill={fill} />
+        {checkUnRead && <div className='notification__red'></div>}
       </Button>
       <Menu
         id='basic-menu'

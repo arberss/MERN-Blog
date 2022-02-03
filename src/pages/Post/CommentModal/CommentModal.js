@@ -3,6 +3,7 @@ import Button from 'components/button';
 import Comment from './Comment';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import Loader from 'components/Loader';
 
 const validationSchema = yup.object().shape({
   comment: yup.string().strict().label('Comment').required(),
@@ -22,6 +23,7 @@ const CommentModal = (props) => {
     postId,
     selectComment,
     initialValues,
+    loading,
   } = props;
 
   const nameInitials = user?.name?.split(' ');
@@ -126,6 +128,7 @@ const CommentModal = (props) => {
               </form>
             </div>
             <div className='commentModal__line'></div>
+            {loading && <Loader />}
             {comments?.map((comment) => {
               return (
                 <Comment

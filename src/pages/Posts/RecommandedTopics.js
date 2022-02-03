@@ -1,24 +1,26 @@
 import React from 'react';
 
 const RecommandedTopics = (props) => {
-  const { newClass, categories, handleCategory } = props;
+  const { newClass, categories, handleCategory, categorySelected } = props;
 
   return (
     <div className={`recommandedTopics ${newClass ? newClass : ''}`}>
       <div className='recommandedTopics__title'>Recommanded Topics</div>
       <div className='recommandedTopics__topics'>
-        <div
-          className='recommandedTopics__topic'
-          onClick={() => handleCategory()}
-        >
-          All
-        </div>
         {categories?.map((category) => {
+          console.log('asdasd', categorySelected?.name, category?.category);
           return (
             <div
-              className='recommandedTopics__topic'
+              className={`recommandedTopics__topic ${
+                categorySelected?.name?.toLowerCase() ===
+                category?.category?.toLowerCase()
+                  ? 'recommandedTopics__topic-active'
+                  : ''
+              }`}
               key={category?._id}
-              onClick={() => handleCategory(category?._id)}
+              onClick={() =>
+                handleCategory({ name: category?.category, id: category?._id })
+              }
             >
               {category?.category}
             </div>

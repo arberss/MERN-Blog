@@ -18,6 +18,7 @@ import { ReactComponent as FavUnfilled } from 'assets/img/favorite-unfilled.svg'
 import CommentModal from './CommentModal/CommentModal';
 import StickyComp from './StickyComponent';
 import DropDownMenu from 'components/DropDownMenu';
+import Loader from 'components/Loader';
 
 const { REACT_APP_WEB_API_IMG_URL } = process.env;
 
@@ -46,6 +47,7 @@ const PublicPost = (props) => {
     deletePost,
     navigate,
     socket,
+    commentLoading,
   } = props;
 
   useEffect(() => {
@@ -159,7 +161,7 @@ const PublicPost = (props) => {
           />
           <div className='singlePost__right'>
             {loading ? (
-              <h1>Loading</h1>
+              <Loader />
             ) : (
               <>
                 <div className='singlePost__right-toptitle'>
@@ -235,6 +237,7 @@ const PublicPost = (props) => {
         selectComment={selectComment}
         selectedComment={comment}
         initialValues={initialValues}
+        loading={commentLoading}
       />
     </div>
   );
@@ -249,6 +252,7 @@ const mapStateToProps = (state) => ({
   initialValues: state?.app?.comments?.index?.initialValues,
   comment: state?.app?.comments?.index?.comment,
   showCommentModal: state?.app?.comments?.index?.showModal,
+  commentLoading: state?.app?.comments?.index?.loading,
   socket: state?.app?.socket?.index?.socket,
 });
 

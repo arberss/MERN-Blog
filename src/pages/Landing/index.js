@@ -16,6 +16,7 @@ const LandingPage = (props) => {
     page,
     size,
     totalSize,
+    loading,
   } = props;
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const LandingPage = (props) => {
             data={publicPosts}
             title='Public Posts'
             pagination={{ page, size, totalSize, handlePagination }}
+            loading={loading}
           />
         </div>
       </main>
@@ -48,6 +50,7 @@ const mapStateToProps = (state) => ({
   page: state.app.posts.public.page,
   size: state.app.posts.public.size,
   totalSize: state.app.posts.public.totalSize,
+  loading: state.app.posts.public.loading,
 });
 
 const mapDispatchToProps = {

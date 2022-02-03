@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 const Favorites = (props) => {
-  const { getFavorites, favorites } = props;
+  const { getFavorites, favorites, loading } = props;
 
   useEffect(() => {
     getFavorites();
@@ -21,6 +21,7 @@ const Favorites = (props) => {
             data={favorites}
             title='Favorites'
             newClass='favorites__newClass'
+            loading={loading}
           />
         </div>
       </div>
@@ -30,6 +31,7 @@ const Favorites = (props) => {
 
 const mapStateToProps = (state) => ({
   favorites: state.app.favorites.index.favorites,
+  loading: state.app.favorites.index.loading,
 });
 
 const mapDispatchToProps = {

@@ -46,6 +46,7 @@ const PrivatePost = (props) => {
     deletePost,
     navigate,
     socket,
+    commentLoading,
   } = props;
 
   useEffect(() => {
@@ -226,6 +227,7 @@ const PrivatePost = (props) => {
         selectComment={selectComment}
         selectedComment={comment}
         initialValues={initialValues}
+        loading={commentLoading}
       />
     </div>
   );
@@ -240,6 +242,7 @@ const mapStateToProps = (state) => ({
   initialValues: state?.app?.comments?.index?.initialValues,
   comment: state?.app?.comments?.index?.comment,
   showCommentModal: state?.app?.comments?.index?.showModal,
+  commentLoading: state?.app?.comments?.index?.loading,
   socket: state?.app?.socket?.index?.socket,
 });
 
