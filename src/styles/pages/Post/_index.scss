@@ -7,6 +7,13 @@
   &__left {
     width: 25%;
 
+    @include respond(tab-port) {
+      width: 35%;
+    }
+    @include respond(phone) {
+      width: 40%;
+    }
+
     &-content {
       margin-right: 5rem;
     }
@@ -30,14 +37,19 @@
 
     &-bottom {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      margin-top: 3rem;
+      margin-top: 2rem;
     }
   }
 
   &__right {
     width: 50%;
+
+    @include respond(tab-port) {
+      width: 55%;
+    }
 
     &-toptitle {
       display: flex;
@@ -48,6 +60,10 @@
     &-title {
       font-size: 3.5rem;
       line-height: 40px;
+    }
+
+    &-like {
+      cursor: pointer;
     }
 
     &-postmenu {
@@ -135,6 +151,8 @@
   &__icon-body {
     display: flex;
     align-items: center;
+    margin-top: 12px;
+    margin-right: 10px;
   }
 
   &__icon {

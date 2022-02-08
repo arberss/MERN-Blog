@@ -206,6 +206,12 @@ const PrivatePost = (props) => {
                     )}
                   </div>
                 </div>
+                <div className='singlePost__right-postImg'>
+                  <img
+                    src={`${REACT_APP_WEB_API_IMG_URL}${post?.imageUrl}`}
+                    alt=''
+                  />
+                </div>
                 <div
                   className='singlePost__right-content'
                   dangerouslySetInnerHTML={{ __html: post?.content }}

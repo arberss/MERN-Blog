@@ -118,6 +118,10 @@
     border-right: 1px solid rgb(231, 223, 223);
     padding-top: 2rem;
     margin-right: 5rem;
+
+    @include respond(phone) {
+      margin-right: 2rem;
+    }
   }
 
   &__right {

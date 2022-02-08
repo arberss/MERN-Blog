@@ -12,14 +12,34 @@
     background-position: bottom 0 right 5rem;
     background-color: rgb(219, 255, 255);
 
+    @include respond(tab-port) {
+      background-image: none;
+    }
+
     &__content {
       padding: 4rem 0;
       width: 42%;
+
+      @include respond(tab-land) {
+        width: 60%;
+      }
+
+      @include respond(tab-port) {
+        width: 65%;
+      }
+
+      @include respond(phone) {
+        width: 100%;
+      }
     }
 
     &__title {
       font-size: 6.2rem;
       font-weight: bold;
+
+      @include respond(phone) {
+        font-size: 5rem;
+      }
     }
 
     &__text {

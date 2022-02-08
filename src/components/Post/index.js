@@ -10,6 +10,7 @@ import { actions as favoriteActions } from 'store/sagas/app/favorites';
 import { actions as navigationActions } from 'store/sagas/app/navigation';
 import Pagination from 'components/Pagination';
 import Loader from 'components/Loader';
+import NoDataMsg from 'components/NoDataMsg';
 
 const PostComp = (props) => {
   const {
@@ -56,67 +57,78 @@ const PostComp = (props) => {
     <div className={`postComp ${newClass ? newClass : ''}`}>
       <div className='postComp__title'>{title}</div>
       <div className='postComp__content'>
-        {loading && <Loader />}
-        {data?.map((post) => {
-          return (
-            <div className='postComp__post' key={post._id}>
-              <div className='postComp__post-left'>
-                <div
-                  className='postComp__post-navigate'
-                  onClick={() => handleNavigation(post?.postStatus, post?._id)}
-                >
-                  <div className='postComp__post-user'>
-                    {post?.creator.name}
+        {!loading && data?.length > 0 ? (
+          data?.map((post) => {
+            return (
+              <div className='postComp__post' key={post._id}>
+                <div className='postComp__post-left'>
+                  <div
+                    className='postComp__post-navigate'
+                    onClick={() =>
+                      handleNavigation(post?.postStatus, post?._id)
+                    }
+                  >
+                    <div className='postComp__post-user'>
+                      {post?.creator.name}
+                    </div>
+                    <div className='postComp__post-title'>{post.title}</div>
                   </div>
-                  <div className='postComp__post-title'>{post.title}</div>
+                  <div className='postComp__post-bottom'>
+                    <div className='postComp__post-date'>
+                      {moment(post.createdAt).format('MMM D')}
+                    </div>
+                    {user?.favorites?.includes(post?._id) ? (
+                      <FavFilled
+                        className='postComp__post-favorite'
+                        onClick={() => handleFavorite(post._id)}
+                      />
+                    ) : (
+                      <FavUnfilled
+                        className='postComp__post-favorite'
+                        onClick={() => handleFavorite(post._id)}
+                      />
+                    )}
+                  </div>
                 </div>
-                <div className='postComp__post-bottom'>
-                  <div className='postComp__post-date'>
-                    {moment(post.createdAt).format('MMM D')}
-                  </div>
-                  {user?.favorites?.includes(post?._id) ? (
-                    <FavFilled
-                      className='postComp__post-favorite'
-                      onClick={() => handleFavorite(post._id)}
-                    />
-                  ) : (
-                    <FavUnfilled
-                      className='postComp__post-favorite'
-                      onClick={() => handleFavorite(post._id)}
+                <div className='postComp__post-right'>
+                  {post.imageUrl && (
+                    <img
+                      src={`${REACT_APP_WEB_API_IMG_URL}${post.imageUrl}`}
+                      className='postComp__post-right-img'
+                      alt=''
                     />
                   )}
                 </div>
-              </div>
-              <div className='postComp__post-right'>
-                {post.imageUrl && (
-                  <img
-                    src={`${REACT_APP_WEB_API_IMG_URL}${post.imageUrl}`}
-                    className='postComp__post-right-img'
-                    alt=''
-                  />
+                {withActions && (
+                  <div className='postComp__actions'>
+                    <div
+                      className='postComp__actions-btn postComp__actions-edit'
+                      onClick={() => editFn(post?._id)}
+                    >
+                      Edit
+                    </div>
+                    <div
+                      className='postComp__actions-btn postComp__actions-delete'
+                      onClick={() => deleteFn(post?._id, 'myPost')}
+                    >
+                      Delete
+                    </div>
+                  </div>
                 )}
               </div>
-              {withActions && (
-                <div className='postComp__actions'>
-                  <div
-                    className='postComp__actions-btn postComp__actions-edit'
-                    onClick={() => editFn(post?._id)}
-                  >
-                    Edit
-                  </div>
-                  <div
-                    className='postComp__actions-btn postComp__actions-delete'
-                    onClick={() => deleteFn(post?._id, 'myPost')}
-                  >
-                    Delete
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <>
+            {data?.length < 1 && !loading ? (
+              <NoDataMsg />
+            ) : (
+              <>{loading && <Loader />}</>
+            )}
+          </>
+        )}
       </div>
-      {pagination && data?.length > 0 && (
+      {!loading && pagination && data?.length > 0 && (
         <Pagination
           handlePagination={handlePagination}
           pageCount={Math.ceil(totalSize / size)}

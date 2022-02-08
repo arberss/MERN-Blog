@@ -63,3 +63,9 @@
     margin-top: 5rem;
   }
 }
+
+.auth-dialog {
+  .css-2zwj5t-MuiPaper-root-MuiDialog-paper {
+    max-width: unset !important;
+  }
+}

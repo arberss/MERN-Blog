@@ -15,6 +15,7 @@ export const SIZE_EDIT = `${PREFIX}SIZE_EDIT`;
 export const EDIT_PAGE = `${PREFIX}EDIT_PAGE`;
 export const EDIT_TOTAL_SIZE = `${PREFIX}EDIT_TOTAL_SIZE`;
 export const SELECT_CATEGORY = `${PREFIX}SELECT_CATEGORY`;
+export const FILTER_SEARCH = `${PREFIX}FILTER_SEARCH`;
 export const SET_LOADING = `${PREFIX}SET_LOADING`;
 
 const _state = {
@@ -22,6 +23,7 @@ const _state = {
   page: 1,
   size: 2,
   totalSize: 1,
+  search: '',
   categorySelected: {
     name: 'All',
     id: null,
@@ -51,6 +53,9 @@ const reducer = (state = _state, { type, payload }) =>
       case SELECT_CATEGORY:
         draft.categorySelected = payload;
         break;
+      case FILTER_SEARCH:
+        draft.search = payload;
+        break;
       case SET_LOADING:
         draft.loading = payload;
         break;
@@ -71,13 +76,16 @@ export const actions = {
   editTotalSize: (payload) => createAction(EDIT_TOTAL_SIZE, { payload }),
   selectCategory: (payload) => createAction(SELECT_CATEGORY, { payload }),
   setLoading: (payload) => createAction(SET_LOADING, { payload }),
+  setSearch: (payload) => createAction(FILTER_SEARCH, { payload }),
 };
 
 export const sagas = {
   *fetchPosts({ payload }) {
     yield put(actions.setLoading(true));
     try {
-      const { page, size } = yield select((state) => state.app.posts.index);
+      const { page, size, search } = yield select(
+        (state) => state.app.posts.index
+      );
 
       console.log('payload', payload);
 
@@ -86,7 +94,7 @@ export const sagas = {
           payload?.name !== 'All' && payload?.name !== undefined
             ? payload?.id
             : ''
-        }?page=${page}&size=${size}&search=`
+        }?page=${page}&size=${size}&search=${search}`
       );
       yield put(actions.fetchPostsSuccess(response?.data));
     } catch (error) {

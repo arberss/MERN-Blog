@@ -63,15 +63,19 @@ const StickyComp = (props) => {
               <span className='singlePost__icon-info'>{post?.comments}</span>
             </div>
             {user?.favorites?.includes(post?._id) ? (
-              <FavFilled
-                className='singlePost__icon'
-                onClick={() => handleFavorite(post._id)}
-              />
+              <div className='singlePost__icon-body'>
+                <FavFilled
+                  className='singlePost__icon'
+                  onClick={() => handleFavorite(post._id)}
+                />
+              </div>
             ) : (
-              <FavUnfilled
-                className='singlePost__icon'
-                onClick={() => handleFavorite(post._id)}
-              />
+              <div className='singlePost__icon-body'>
+                <FavUnfilled
+                  className='singlePost__icon'
+                  onClick={() => handleFavorite(post._id)}
+                />
+              </div>
             )}
           </div>
         </div>

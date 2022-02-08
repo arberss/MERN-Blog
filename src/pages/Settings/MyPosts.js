@@ -5,7 +5,6 @@ import { actions as myPostActions } from 'store/sagas/app/posts/myPosts';
 import { actions as deletePost } from 'store/sagas/app/posts/delete';
 import { actions as navigateActions } from 'store/sagas/app/navigation';
 import PostComp from 'components/Post';
-import Loader from 'components/Loader';
 
 const MyPosts = (props) => {
   const { fetchMyPosts, posts, navigate, deletePost, loading } = props;

@@ -10,6 +10,7 @@ import { actions as navigateActions } from 'store/sagas/app/navigation';
 import RecommandedTopics from './RecommandedTopics';
 import Button from 'components/button';
 import Sticky from 'react-sticky-el';
+import InputComponent from 'components/input';
 
 const Posts = (props) => {
   const {
@@ -26,6 +27,8 @@ const Posts = (props) => {
     categorySelected,
     clearInitValues,
     loading,
+    setSearch,
+    search,
   } = props;
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const Posts = (props) => {
 
   useEffect(() => {
     fetchPosts(categorySelected);
-  }, [page, categorySelected]);
+  }, [page, categorySelected, search]);
 
   const handleCategory = (category) => {
     editPage(1);
@@ -52,6 +55,11 @@ const Posts = (props) => {
         <div className='container'>
           <div className='posts__content'>
             <div className='posts__content-left'>
+              <InputComponent
+                search={true}
+                placeholder='Search'
+                handleChange={(e) => setSearch(e.target.value)}
+              />
               <PostComp
                 data={posts}
                 title=''
@@ -95,6 +103,7 @@ const mapStateToProps = (state) => ({
   loading: state.app.posts.index.loading,
   page: state.app.posts.index.page,
   size: state.app.posts.index.size,
+  search: state.app.posts.index.search,
   totalSize: state.app.posts.index.totalSize,
   categorySelected: state.app.posts.index.categorySelected,
   categories: state.app.categories.index.categories,
@@ -104,6 +113,7 @@ const mapDispatchToProps = {
   fetchPosts: postActions.fetchPosts,
   editPage: postActions.editPage,
   getCategories: categoryActions.getCategories,
+  setSearch: postActions.setSearch,
   selectCategory: postActions.selectCategory,
   navigate: navigateActions.navigate,
   clearInitValues: createPostActions.clearInitValues,

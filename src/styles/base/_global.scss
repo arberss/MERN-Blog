@@ -24,11 +24,11 @@ html {
   }
 
   @include respond(normal-desktop) {
-    font-size: 80%;
+    font-size: 72.5%;
   }
 
   @include respond(big-desktop) {
-    font-size: 100%;
+    font-size: 80%;
   }
 }
 
@@ -46,6 +46,12 @@ html {
   @include respond(tabUp) {
     width: 100%;
   }
+}
+
+.noData {
+  margin: 2rem 0;
+  text-align: center;
+  font-size: 1.5rem;
 }
 
 .loader {

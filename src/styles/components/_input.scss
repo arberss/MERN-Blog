@@ -46,3 +46,28 @@
     color: rgba(0, 0, 0, 0.46);
   }
 }
+
+.searchInput {
+  width: 80%;
+  padding: 0;
+
+  &__content {
+    position: relative;
+    padding-right: 35px;
+    border-bottom: unset;
+    border: 1px solid rgb(204, 204, 204);
+
+    input {
+      height: unset;
+      margin: 0;
+      padding: 12px;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    fill: grey;
+  }
+}
