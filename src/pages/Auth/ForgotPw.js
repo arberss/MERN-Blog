@@ -10,6 +10,13 @@ import { actions as forgotActions } from 'store/sagas/app/auth/forgot';
 import { actions as navigation } from 'store/sagas/app/navigation';
 import Dialog from '@mui/material/Dialog';
 import { ReactComponent as CloseIcon } from 'assets/img/x-icon.svg';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 'unset !important',
+  },
+});
 
 const validationSchema = yup.object().shape({
   email: yup
@@ -24,6 +31,7 @@ const validationSchema = yup.object().shape({
 const Login = (props) => {
   const { sendRecovery, navigate, setModal, showForgotModal, setLoginModal } =
     props;
+    const classes = useStyles();
 
   const navigateLogin = () => {
     setModal(false);
@@ -37,6 +45,7 @@ const Login = (props) => {
       scroll='body'
       aria-labelledby='scroll-dialog-title'
       aria-describedby='scroll-dialog-description'
+      PaperProps={{ classes: { root: classes.root } }}
     >
       <div className='login'>
         <CloseIcon className='login__close' onClick={() => setModal(false)} />

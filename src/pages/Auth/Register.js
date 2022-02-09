@@ -10,6 +10,13 @@ import { actions as loginActions } from 'store/sagas/app/auth/login';
 import { actions as navigation } from 'store/sagas/app/navigation';
 import Dialog from '@mui/material/Dialog';
 import { ReactComponent as CloseIcon } from 'assets/img/x-icon.svg';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 'unset !important',
+  },
+});
 
 const validationSchema = yup.object().shape({
   fullName: yup
@@ -41,6 +48,7 @@ const validationSchema = yup.object().shape({
 const Register = (props) => {
   const { submitRegister, navigate, setModal, showModal, setLoginModal } =
     props;
+    const classes = useStyles();
 
   const navigateLogin = () => {
     setModal(false);
@@ -54,6 +62,7 @@ const Register = (props) => {
       scroll='body'
       aria-labelledby='scroll-dialog-title'
       aria-describedby='scroll-dialog-description'
+      PaperProps={{ classes: { root: classes.root } }}
     >
       <div className='login register'>
         <CloseIcon className='login__close' onClick={() => setModal(false)} />
