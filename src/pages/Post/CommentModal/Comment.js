@@ -39,7 +39,9 @@ const Comment = (props) => {
             </div>
           )}
           <div className='commentModal__comment-header-info'>
-            <div className='commentModal__comment-header-name'>John Doe</div>
+            <div className='commentModal__comment-header-name'>
+              {comment?.user?.name}
+            </div>
           </div>
         </div>
         {comment?.edited && (
