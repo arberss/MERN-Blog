@@ -38,6 +38,12 @@
       color: $color-white;
       border-radius: 3rem;
     }
+
+    &--dashboard {
+      margin-right: 1rem;
+      background-color: rgb(136, 204, 231);
+      border-radius: 1rem;
+    }
   }
 
   &__authIcon {

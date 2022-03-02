@@ -22,6 +22,7 @@ import Favorites from 'pages/Favorites';
 import Settings from 'pages/Settings';
 import ResetPw from 'pages/Auth/ResetPw';
 import CreatePost from 'pages/Posts/Create/index';
+import Dashboard from 'pages/Dashboard';
 import { io } from 'socket.io-client';
 
 function App(props) {
@@ -69,7 +70,7 @@ function App(props) {
   const checkUser = () => {
     const user = getCurrentUser();
 
-    if (user) {
+    if (user?.userId) {
       setAuthStatus({ isAuth: true, token: user.token });
       getMe();
       getNotifications();
@@ -120,6 +121,11 @@ function App(props) {
             exact
             path='/user/settings'
             component={Settings}
+          />
+          <ProtectedRoute
+            protectedRole={['ADMIN']}
+            path='/dashboard'
+            component={Dashboard}
           />
           <Route exact path='/user/reset-password/:token' component={ResetPw} />
           <Redirect to='/' />

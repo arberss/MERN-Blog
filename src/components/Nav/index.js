@@ -19,6 +19,7 @@ const Nav = (props) => {
     match,
     notifications,
     readNotification,
+    user,
   } = props;
 
   return (
@@ -43,6 +44,14 @@ const Nav = (props) => {
               </>
             ) : (
               <>
+                {user?.role === 'ADMIN' && (
+                  <div
+                    className='nav__list nav__list--dashboard'
+                    onClick={() => navigate('/dashboard/users')}
+                  >
+                    Dashboard
+                  </div>
+                )}
                 <BookmarkIcon
                   className='nav__authIcon'
                   onClick={() => navigate('/post/favorites/')}
@@ -65,6 +74,7 @@ const Nav = (props) => {
 const mapStateToProps = (state) => ({
   isAuth: state?.app?.auth?.login?.isAuth,
   notifications: state?.app?.notifications?.index?.notifications,
+  user: state?.app?.me?.index.user,
 });
 
 const mapDispatchToProps = {

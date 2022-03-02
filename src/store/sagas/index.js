@@ -20,6 +20,7 @@ import { watcher as deleteComment } from '../sagas/app/comments/delete';
 import { watcher as settings } from '../sagas/app/settings';
 import { watcher as categories } from '../sagas/app/categories';
 import { watcher as notifications } from '../sagas/app/notifications';
+import { watcher as users } from '../sagas/app/users';
 
 export default function* root() {
   yield all([
@@ -44,5 +45,6 @@ export default function* root() {
     settings(),
     categories(),
     notifications(),
+    users(),
   ]);
 }

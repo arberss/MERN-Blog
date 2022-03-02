@@ -21,6 +21,7 @@ import settings from '../sagas/app/settings';
 import categories from '../sagas/app/categories';
 import socket from '../sagas/app/socket';
 import notifications from '../sagas/app/notifications';
+import users from '../sagas/app/users';
 
 export default function createReducer(injectedReducers) {
   return combineReducers({
@@ -68,6 +69,9 @@ export default function createReducer(injectedReducers) {
       }),
       notifications: combineReducers({
         index: notifications,
+      }),
+      users: combineReducers({
+        index: users,
       }),
     }),
     ...injectedReducers,

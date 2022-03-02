@@ -14,6 +14,7 @@ function DropDown(props) {
     errors,
     touched,
     errorClass,
+    menuClass,
   } = props;
 
   return (
@@ -39,7 +40,11 @@ function DropDown(props) {
         >
           {options?.map((opt) => {
             return (
-              <MenuItem value={opt.value} className='dropdownMenu__item'>
+              <MenuItem
+                value={opt.value}
+                className={`dropdownMenu__item ${menuClass ? menuClass : ''}`}
+                key={opt?.value}
+              >
                 {opt?.name}
               </MenuItem>
             );
