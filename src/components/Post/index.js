@@ -90,7 +90,9 @@ const PostComp = (props) => {
                     )}
                   </div>
                 </div>
-                <div className='postComp__post-right'>
+                <div className='postComp__post-right'  onClick={() =>
+                      handleNavigation(post?.postStatus, post?._id)
+                    }>
                   {post.imageUrl && (
                     <img
                       src={`${REACT_APP_WEB_API_IMG_URL}${post.imageUrl}`}

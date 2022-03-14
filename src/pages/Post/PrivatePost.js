@@ -18,6 +18,7 @@ import { ReactComponent as FavUnfilled } from 'assets/img/favorite-unfilled.svg'
 import CommentModal from './CommentModal/CommentModal';
 import StickyComp from './StickyComponent';
 import DropDownMenu from 'components/DropDownMenu';
+import Loader from 'components/Loader';
 
 const { REACT_APP_WEB_API_IMG_URL } = process.env;
 
@@ -163,7 +164,7 @@ const PrivatePost = (props) => {
           />
           <div className='singlePost__right'>
             {loading ? (
-              <h1>Loading</h1>
+              <Loader />
             ) : (
               <>
                 <div className='singlePost__right-toptitle'>
