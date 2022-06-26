@@ -102,4 +102,10 @@
     min-width: unset !important;
     padding: 0 !important;
   }
+
+  &__noData {
+    text-align: center;
+    margin: 10px;
+    font-size: 1.2rem;
+  }
 }

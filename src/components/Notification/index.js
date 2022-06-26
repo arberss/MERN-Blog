@@ -3,9 +3,27 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { ReactComponent as NotificationIcon } from 'assets/img/notifications.svg';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+  paper: {
+    top: '55px !important',
+    minWidth: '168px !important',
+    maxHeight: '250px !important',
+    overflowY: 'auto !important',
+  },
+});
 
 const Notification = (props) => {
-  const { navigate, className, fill = '#757575', data, readNotification } = props;
+  const styles = useStyles();
+
+  const {
+    navigate,
+    className,
+    fill = '#757575',
+    data,
+    readNotification,
+  } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -41,8 +59,9 @@ const Notification = (props) => {
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        classes={{ paper: styles.paper  }}
       >
-        {data?.map((dt) => {
+        {data?.length > 0 ? data?.map((dt) => {
           return (
             <MenuItem
               className='notification__msg'
@@ -54,7 +73,9 @@ const Notification = (props) => {
               {dt.message}
             </MenuItem>
           );
-        })}
+        }) : 
+          <div className="notification__noData">No notification at the moment.</div>
+        }
       </Menu>
     </div>
   );
