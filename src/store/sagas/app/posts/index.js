@@ -87,8 +87,6 @@ export const sagas = {
         (state) => state.app.posts.index
       );
 
-      console.log('payload', payload);
-
       const response = yield axios.get(
         `/post/all/${
           payload?.name !== 'All' && payload?.name !== undefined

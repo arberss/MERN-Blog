@@ -7,8 +7,6 @@ import { withRouter } from 'react-router';
 import Button from 'components/button';
 import { actions as settingsActions } from 'store/sagas/app/settings';
 
-const { REACT_APP_WEB_API_IMG_URL } = process.env;
-
 const validationSchema = yup.object().shape({
   email: yup
     .string()
@@ -31,7 +29,7 @@ const validationSchema = yup.object().shape({
 });
 
 const Profile = (props) => {
-  const { initialValues, updateUser } = props;
+  const { initialValues, updateUser, loading } = props;
 
   return (
     <Formik
@@ -46,7 +44,6 @@ const Profile = (props) => {
         touched,
         handleChange,
         setFieldValue,
-        handleBlur,
         handleSubmit,
         isSubmitting,
       }) => (
@@ -55,11 +52,7 @@ const Profile = (props) => {
           <form className='profile__form' onSubmit={handleSubmit}>
             <div className='profile__image'>
               {values?.imageUrl ? (
-                <img
-                  src={`${REACT_APP_WEB_API_IMG_URL}${values?.imageUrl}`}
-                  alt=''
-                  className='profile__img'
-                />
+                <img src={values?.imageUrl} alt='' className='profile__img' />
               ) : (
                 <div className='profile__noimg'>
                   {initialValues.name.charAt(0).toUpperCase()}
@@ -125,7 +118,13 @@ const Profile = (props) => {
                 errorClass='errorClass'
               />
             </div>
-            <Button title='Save' newClass='profile__saveBtn' type='submit' />
+            <Button
+              title='Save'
+              newClass='profile__saveBtn'
+              type='submit'
+              disabled={loading || isSubmitting}
+              loading={loading}
+            />
           </form>
         </div>
       )}
@@ -135,6 +134,7 @@ const Profile = (props) => {
 
 const mapStateToProps = (state) => ({
   initialValues: state?.app?.settings?.index.initialValues,
+  loading: state?.app?.settings?.index.loading,
 });
 const mapDispatchToProps = {
   updateUser: settingsActions.updateUser,

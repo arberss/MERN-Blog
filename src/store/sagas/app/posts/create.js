@@ -5,6 +5,7 @@ import createAction from 'utils/action-creator';
 import Logger from 'utils/logger';
 import axios from 'utils/axios';
 import { actions as navigateActions } from '../navigation';
+import { fileToBase64 } from 'utils/functions';
 
 const logger = new Logger('Auth Login');
 
@@ -23,7 +24,7 @@ const _state = {
     content: '',
     postStatus: 'Private',
     categories: [],
-    image: '',
+    image: null,
   },
   loading: false,
   showModal: false,
@@ -38,7 +39,7 @@ const reducer = (state = _state, { type, payload }) =>
           content: '',
           postStatus: 'Private',
           categories: [],
-          image: '',
+          image: null,
         };
         break;
       case SET_LOADING:
@@ -53,7 +54,7 @@ const reducer = (state = _state, { type, payload }) =>
           content: '',
           postStatus: 'Private',
           categories: [],
-          image: '',
+          image: null,
         };
         break;
       case SHOW_MODAL:
@@ -89,15 +90,16 @@ export const sagas = {
   *createPost({ payload }) {
     yield put(actions.setLoading(true));
     try {
-      let formData = new FormData();
-      formData.append('title', payload.values.title);
-      formData.append('imageUrl', payload.values.imageFile);
-      formData.append('content', payload.values.content);
-      formData.append('postStatus', payload.values.postStatus);
-      formData.append('categories', payload.values.categories);
+      let fileBase64 = null;
+      if (payload?.values?.imageFile !== null && typeof payload?.values?.imageFile !== 'string') {
+        fileBase64 = yield fileToBase64(payload?.values?.imageFile);
+      }
 
       if (payload?.postId) {
-        yield axios.put(`/post/${payload?.postId}`, formData);
+        yield axios.put(`/post/${payload?.postId}`, {
+          ...payload?.values,
+          imageUrl: fileBase64,
+        });
         yield put(
           navigateActions.navigate(
             `/post/${payload?.values?.postStatus}/${payload?.postId}`
@@ -113,7 +115,10 @@ export const sagas = {
           progress: undefined,
         });
       } else {
-        const response = yield axios.post('/post', formData);
+        const response = yield axios.post('/post', {
+          ...payload?.values,
+          imageUrl: fileBase64,
+        });
         yield put(actions.createPostSuccess(response?.data));
         payload?.formActions.resetForm({});
 

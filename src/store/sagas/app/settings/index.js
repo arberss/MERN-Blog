@@ -5,6 +5,7 @@ import Logger from 'utils/logger';
 import axios from 'utils/axios';
 import { toast } from 'react-toastify';
 import { actions as meActions } from '../me';
+import { fileToBase64 } from 'utils/functions';
 
 const logger = new Logger('Post Index');
 
@@ -19,7 +20,7 @@ const _state = {
   initialValues: {
     name: '',
     email: '',
-    imageUrl: '',
+    imageUrl: null,
     password: '',
     confirmPassword: '',
   },
@@ -33,12 +34,12 @@ const reducer = (state = _state, { type, payload }) =>
       case SET_USER_INFO:
         draft.initialValues.name = payload?.name;
         draft.initialValues.email = payload?.email;
-        draft.initialValues.imageUrl = payload?.imageUrl;
+        draft.initialValues.imageUrl = payload?.imageUrl ?? null;
         break;
       case UPDATE_USER_SUCCESS:
         draft.initialValues.name = payload?.name;
         draft.initialValues.email = payload?.email;
-        draft.initialValues.imageUrl = payload?.imageUrl;
+        draft.initialValues.imageUrl = payload?.imageUrl ?? null;
         draft.initialValues.password = '';
         draft.initialValues.confirmPassword = '';
         break;
@@ -67,13 +68,15 @@ export const sagas = {
   *updateUser({ payload }) {
     yield put(actions.setLoading(true));
     try {
-      let formData = new FormData();
-      formData.append('imageUrl', payload?.values?.imageUrl);
-      formData.append('name', payload?.values?.name);
-      formData.append('email', payload?.values?.email);
-      formData.append('password', payload?.values?.password);
-      formData.append('confirmPassword', payload?.values?.confirmPassword);
-      const response = yield axios.put(`/user`, formData);
+      let fileBase64 = null;
+      if (payload?.values?.imageUrl !== null && typeof payload?.values?.imageUrl !== 'string') {
+        fileBase64 = yield fileToBase64(payload?.values?.imageUrl);
+      }
+      
+      const response = yield axios.put(`/user`, {
+        ...payload?.values,
+        imageUrl: fileBase64,
+      });
       yield put(actions.updateUserSuccess(response?.data));
       yield put(meActions.updateMe(response?.data));
       payload?.actions?.resetForm({

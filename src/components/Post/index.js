@@ -30,8 +30,6 @@ const PostComp = (props) => {
   } = props;
   const { page, size, totalSize, handlePagination } = pagination || {};
 
-  const { REACT_APP_WEB_API_IMG_URL } = process.env;
-
   const handleFavorite = (postId) => {
     if (!isAuth) {
       setModal(true);
@@ -95,7 +93,7 @@ const PostComp = (props) => {
                     }>
                   {post.imageUrl && (
                     <img
-                      src={`${REACT_APP_WEB_API_IMG_URL}${post.imageUrl}`}
+                      src={post.imageUrl}
                       className='postComp__post-right-img'
                       alt=''
                     />
