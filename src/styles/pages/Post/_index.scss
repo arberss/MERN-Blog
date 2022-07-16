@@ -4,14 +4,35 @@
     padding: 3rem 0;
   }
 
+  &__mobileActions {
+    display: none;
+
+    @include respond(phone) {
+      display: flex;
+    }
+
+    &--actions {
+      @include respond(phone) {
+        margin: 2rem 0;
+      }
+    }
+
+    .postActions__icon-body {
+      @include respond(phone) {
+        margin-right: 25px;
+      }
+    }
+  }
+
   &__left {
     width: 25%;
 
     @include respond(tab-port) {
-      width: 35%;
+      width: 30%;
     }
+
     @include respond(phone) {
-      width: 40%;
+      display: none;
     }
 
     &-content {
@@ -34,14 +55,6 @@
       background-color: rgba(230, 230, 230, 1);
       margin: 1.5rem 0;
     }
-
-    &-bottom {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 2rem;
-    }
   }
 
   &__right {
@@ -49,6 +62,10 @@
 
     @include respond(tab-port) {
       width: 55%;
+    }
+
+    @include respond(phone) {
+      width: 100%;
     }
 
     &-toptitle {
@@ -139,6 +156,10 @@
 
     &-postImg {
       margin: 1.5rem 0;
+
+      @include respond(phone) {
+        margin: 2.5rem 0;
+      }
 
       img {
         max-width: 100%;
