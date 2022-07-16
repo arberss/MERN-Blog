@@ -111,6 +111,10 @@
   &__content {
     width: 100%;
     display: flex;
+
+    @include respond(xs-phone) {
+      flex-direction: column-reverse;
+    }
   }
 
   &__content-left {
@@ -122,10 +126,26 @@
     @include respond(phone) {
       margin-right: 2rem;
     }
+
+    @include respond(xs-phone) {
+      margin-right: 0;
+      border-right: 0;
+    }
   }
 
   &__right {
     width: 40%;
+
+    @include respond(xs-phone) {
+      width: 100%;
+    }
+
+    & > div {
+      @include respond(xs-phone) {
+        min-height: unset !important;
+        margin-bottom: 2rem;
+      }
+    }
   }
 
   &__createBtn {
@@ -142,6 +162,10 @@
   width: 90% !important;
   margin: 0 !important;
   margin-right: 5rem !important;
+
+  @include respond(xs-phone) {
+    width: 100% !important;
+  }
 
   .postComp__content {
     border-top: 1px solid rgb(231, 223, 223);

@@ -4,6 +4,10 @@
     margin: 0 auto;
     margin-top: 3rem;
     margin-bottom: 3rem;
+
+    @include respond(phone) {
+      width: 100%;
+    }
   }
 
   &__title {
@@ -14,16 +18,28 @@
   &__form {
     width: 80%;
     margin: 0 auto;
+
+    @include respond(phone) {
+      width: 100%;
+    }
   }
 
   &__dropdown {
     width: 50% !important;
+
+    @include respond(phone) {
+      width: 100% !important;
+    }
   }
 
   .multiSelect {
     width: 50% !important;
     margin: 0 !important;
     margin-top: 3rem !important;
+
+    @include respond(phone) {
+      width: 100% !important;
+    }
 
     &__label {
       font-size: 1.2rem !important;
@@ -39,9 +55,17 @@
   &__nameInput {
     width: 50% !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.46) !important;
+
+    @include respond(phone) {
+      width: 100% !important;
+    }
   }
 
   &__inputFile {
     width: 50% !important;
+
+    @include respond(phone) {
+      width: 100% !important;
+    }
   }
 }
