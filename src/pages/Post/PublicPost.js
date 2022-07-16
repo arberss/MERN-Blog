@@ -19,6 +19,7 @@ import CommentModal from './CommentModal/CommentModal';
 import StickyComp from './StickyComponent';
 import DropDownMenu from 'components/DropDownMenu';
 import Loader from 'components/Loader';
+import PostActions from 'components/PostActions';
 
 const PublicPost = (props) => {
   const {
@@ -208,11 +209,20 @@ const PublicPost = (props) => {
                     )}
                   </div>
                 </div>
-                <div className='singlePost__right-postImg'>
-                  <img
-                    src={post?.imageUrl}
-                    alt=''
+                <div className='singlePost__mobileActions'>
+                  <PostActions
+                    actions={{
+                      handleLike,
+                      handleCommentIcon,
+                      handleFavorite,
+                      post,
+                      user,
+                    }}
+                    customClass='singlePost__mobileActions--actions'
                   />
+                </div>
+                <div className='singlePost__right-postImg'>
+                  <img src={post?.imageUrl} alt='' />
                 </div>
                 <div
                   className='singlePost__right-content'

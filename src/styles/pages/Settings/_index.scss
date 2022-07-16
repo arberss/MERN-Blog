@@ -30,6 +30,10 @@
     width: 60%;
     margin: 0 auto;
     padding: 2rem 0;
+
+    @include respond(phone) {
+      width: 100%;
+    }
   }
 
   &__title {
