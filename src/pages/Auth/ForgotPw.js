@@ -29,9 +29,9 @@ const validationSchema = yup.object().shape({
 });
 
 const Login = (props) => {
-  const { sendRecovery, navigate, setModal, showForgotModal, setLoginModal } =
+  const { sendRecovery, loading, setModal, showForgotModal, setLoginModal } =
     props;
-    const classes = useStyles();
+  const classes = useStyles();
 
   const navigateLogin = () => {
     setModal(false);
@@ -84,7 +84,13 @@ const Login = (props) => {
                   handleChange={handleChange}
                   touched={touched.email}
                 />
-                <Button title='Send' newClass='login__btn' type='submit' />
+                <Button
+                  title='Send'
+                  newClass='login__btn'
+                  type='submit'
+                  loading={loading}
+                  disabled={loading || isSubmitting}
+                />
               </form>
               <div className='login__new'>
                 <span onClick={navigateLogin}>Login</span>
@@ -100,6 +106,7 @@ const Login = (props) => {
 const mapStateToProps = (state) => ({
   login: state.app.auth.login,
   showForgotModal: state.app.auth.forgot.modal,
+  loading: state.app.auth.forgot.loading,
   showLoginModal: state.app.auth.login.modal,
 });
 const mapDispatchToProps = {

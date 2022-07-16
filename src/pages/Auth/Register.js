@@ -46,7 +46,7 @@ const validationSchema = yup.object().shape({
 });
 
 const Register = (props) => {
-  const { submitRegister, navigate, setModal, showModal, setLoginModal } =
+  const { submitRegister, loading, setModal, showModal, setLoginModal } =
     props;
     const classes = useStyles();
 
@@ -142,6 +142,8 @@ const Register = (props) => {
                 <Button
                   title='create account'
                   newClass='login__btn register__btn'
+                  loading={loading}
+                  disabled={loading || isSubmitting}
                 />
               </form>
               <div className='login__new'>
@@ -159,6 +161,7 @@ const Register = (props) => {
 const mapStateToProps = (state) => ({
   register: state.app.auth.register,
   showModal: state.app.auth.register.modal,
+  loading: state.app.auth.register.loading,
 });
 const mapDispatchToProps = {
   submitRegister: registerActions.register,

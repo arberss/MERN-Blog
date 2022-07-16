@@ -26,7 +26,7 @@ const validationSchema = yup.object().shape({
       return replacedVal !== '';
     }),
   postStatus: yup.string().label('Post status').required(),
-  image: yup.string().label('Image').required(),
+  image: yup.string().nullable().label('Image').required(),
   categories: yup.array().min(1).label('Categories').required(),
 });
 
