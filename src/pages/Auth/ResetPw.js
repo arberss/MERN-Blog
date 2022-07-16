@@ -23,7 +23,7 @@ const validationSchema = yup.object().shape({
 });
 
 const ResetPw = (props) => {
-  const { resetFn, match } = props;
+  const { resetFn, match, loading } = props;
 
   return (
     <Formik
@@ -74,7 +74,13 @@ const ResetPw = (props) => {
                 handleChange={handleChange}
                 touched={touched.confirmPassword}
               />
-              <Button title='Confirm' newClass='login__btn' type='submit' />
+              <Button
+                title='Confirm'
+                newClass='login__btn'
+                type='submit'
+                loading={loading}
+                disabled={loading || isSubmitting}
+              />
             </form>
           </div>
         </div>
@@ -83,7 +89,9 @@ const ResetPw = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  loading: state.app.auth.reset.loading,
+});
 
 const mapDispatchToProps = {
   resetFn: resetActions.resetPassword,
