@@ -42,7 +42,6 @@ const mapStateToProps = (state) => ({
   activeTab: state?.app?.settings?.index.activeTab,
 });
 const mapDispatchToProps = {
-  updateUser: settingsActions.updateUser,
   setActiveTab: settingsActions.setActiveTab,
 };
 

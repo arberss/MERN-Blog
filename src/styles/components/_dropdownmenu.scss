@@ -1,6 +1,8 @@
 .DropDownMenu {
-  width: 20px;
-  height: 20px;
+  &__dots {
+    width: 20px;
+    height: 20px;
+  }
 
   &__lists {
     padding: 0 1.5rem;

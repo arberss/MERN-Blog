@@ -1,8 +1,6 @@
 import DropDownMenu from 'components/DropDownMenu';
 import React from 'react';
 
-const { REACT_APP_WEB_API_IMG_URL } = process.env;
-
 const Comment = (props) => {
   const { comment, user, deleteComment, postId, selectComment } = props;
 
@@ -25,7 +23,7 @@ const Comment = (props) => {
         <div className='commentModal__comment-header-left'>
           {comment?.user?.imageUrl ? (
             <img
-              src={`${REACT_APP_WEB_API_IMG_URL}${comment?.user?.imageUrl}`}
+              src={comment?.user?.imageUrl}
               alt=''
               className='commentModal__comment-header-img'
             />

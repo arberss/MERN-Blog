@@ -50,6 +50,8 @@ const Create = (props) => {
     match,
     fetchPost,
     clearInitValues,
+    post,
+    loading,
   } = props;
 
   const [imageFile, setImageFile] = useState('');
@@ -67,7 +69,7 @@ const Create = (props) => {
       fetchPost(postId);
       setImageFile(initialValues.image);
     }
-  }, [postId]);
+  }, [postId, initialValues.image]);
 
   const handleImage = (e, setFieldValue) => {
     if (e.target.files[0]) {
@@ -78,8 +80,6 @@ const Create = (props) => {
       setImageFile('');
     }
   };
-
-  console.log(initialValues);
 
   return (
     <>
@@ -175,6 +175,8 @@ const Create = (props) => {
                     title={`${postId ? 'Update' : 'Create'}`}
                     newClass='login__btn'
                     type='submit'
+                    disabled={loading || isSubmitting}
+                    loading={loading}
                   />
                 </form>
               </div>
@@ -189,6 +191,7 @@ const Create = (props) => {
 const mapStateToProps = (state) => ({
   post: state.app.post.index.post,
   initialValues: state?.app?.posts?.createPost?.initialValues,
+  loading: state?.app?.posts?.createPost?.loading,
   categories: state?.app?.categories?.index?.categories,
 });
 

@@ -76,7 +76,9 @@
 
     &-button {
       width: fit-content !important;
-      padding: 1rem 2rem !important;
+      min-width: 8.15rem;
+      height: 3.5rem !important;
+      padding: 0 2rem !important;
       border-radius: 2rem;
       background-color: rgba(26, 137, 23, 0.8);
       color: white;

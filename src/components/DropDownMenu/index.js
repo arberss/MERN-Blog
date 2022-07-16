@@ -3,7 +3,15 @@ import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import Avatar from '@mui/material/Avatar';
+import { styled } from '@mui/material/styles';
+import threeDots  from '../../assets/img/three-dots.svg';
+
+const CustomBtn = styled(IconButton)(() => ({
+  '&.MuiButtonBase-root': {
+    width: '30px',
+    height: '30px',
+  },
+}));
 
 const DropDownMenu = (props) => {
   const { lists, tooltip = '', className } = props;
@@ -23,9 +31,9 @@ const DropDownMenu = (props) => {
     <div className={`DropDownMenu ${className || ''}`}>
       <Box sx={styles.content}>
         <Tooltip title={tooltip}>
-          <IconButton onClick={handleClick} size='small' sx={{ ml: 2 }}>
-            <span className='DropDownMenu__text'>...</span>
-          </IconButton>
+          <CustomBtn onClick={handleClick} size='small' sx={{ ml: 2 }}>
+            <img src={threeDots} className='DropDownMenu__dots' alt='' />
+          </CustomBtn>
         </Tooltip>
       </Box>
       <Menu

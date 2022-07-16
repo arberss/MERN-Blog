@@ -128,9 +128,12 @@ export const sagas = {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('ERRRRORII', error);
+    } finally {
+      yield put(actions.setLoading(false));
     }
   },
   *comment({ payload }) {
+    yield put(actions.setLoading(true));
     try {
       let response;
       if (!payload?.commentId) {
@@ -153,6 +156,8 @@ export const sagas = {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('ERRRRORII', error);
+    } finally {
+      yield put(actions.setLoading(false));
     }
   },
 };

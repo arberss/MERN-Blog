@@ -1,8 +1,9 @@
 import clsx from 'clsx';
+import Loader from 'components/Loader';
 import React from 'react';
 
 const Button = (props) => {
-  const { title, newClass, type = 'text', onClick, disabled } = props;
+  const { title, newClass, type = 'text', onClick, disabled, loading, loaderSize } = props;
 
   return (
     <button
@@ -11,7 +12,7 @@ const Button = (props) => {
       onClick={onClick}
       disabled={disabled}
     >
-      {title}
+      {loading ? <Loader newClass='button__loading' size={loaderSize} /> : title}
     </button>
   );
 };
