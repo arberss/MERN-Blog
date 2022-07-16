@@ -20,8 +20,6 @@ import StickyComp from './StickyComponent';
 import DropDownMenu from 'components/DropDownMenu';
 import Loader from 'components/Loader';
 
-const { REACT_APP_WEB_API_IMG_URL } = process.env;
-
 const PrivatePost = (props) => {
   const {
     match,
@@ -181,7 +179,7 @@ const PrivatePost = (props) => {
                   <div className='singlePost__right-author-info'>
                     {post?.creator?.imageUrl !== null ? (
                       <img
-                        src={`${REACT_APP_WEB_API_IMG_URL}${post?.creator?.imageUrl}`}
+                        src={post?.creator?.imageUrl}
                         alt=''
                         className='singlePost__right-author-img'
                       />
@@ -209,7 +207,7 @@ const PrivatePost = (props) => {
                 </div>
                 <div className='singlePost__right-postImg'>
                   <img
-                    src={`${REACT_APP_WEB_API_IMG_URL}${post?.imageUrl}`}
+                    src={post?.imageUrl}
                     alt=''
                   />
                 </div>

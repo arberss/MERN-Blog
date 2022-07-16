@@ -8,7 +8,6 @@ const RecommandedTopics = (props) => {
       <div className='recommandedTopics__title'>Recommanded Topics</div>
       <div className='recommandedTopics__topics'>
         {categories?.map((category) => {
-          console.log('asdasd', categorySelected?.name, category?.category);
           return (
             <div
               className={`recommandedTopics__topic ${

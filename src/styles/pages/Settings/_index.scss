@@ -100,7 +100,8 @@
 
   &__saveBtn {
     width: auto !important;
-    padding: 1.5rem 6rem !important;
+    min-width: 15rem;
+    padding: 1.5rem 0 !important;
     background-color: rgb(10, 110, 10);
     margin: 0 auto;
     margin-top: 4rem;

@@ -28,7 +28,7 @@ const InputFile = (props) => {
         <div className='form_file__iconbody'>
           <InsertPhoto className='form_file__icon' />
           <div className='form_file__icon-label'>
-            {values === '' ? 'Upload an image' : 'Image uploaded'}
+            {values === '' || values === null ? 'Upload an image' : 'Image uploaded'}
           </div>
         </div>
         <input

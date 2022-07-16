@@ -9,8 +9,6 @@ import { withRouter } from 'react-router';
 import { actions as logoutAction } from 'store/sagas/app/auth/logout';
 import { actions as navigateActions } from 'store/sagas/app/navigation';
 
-const { REACT_APP_WEB_API_IMG_URL } = process.env;
-
 const UserMenu = (props) => {
   const { navigate, logout, user } = props;
 
@@ -31,13 +29,11 @@ const UserMenu = (props) => {
         <Tooltip title='Account settings'>
           <IconButton onClick={handleClick} size='small' sx={{ ml: 2 }}>
             {!user?.imageUrl ? (
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}>
+                {user?.name?.charAt(0)}
+              </Avatar>
             ) : (
-              <img
-                className='userMenu__img'
-                src={`${REACT_APP_WEB_API_IMG_URL}${user?.imageUrl}`}
-                alt=''
-              />
+              <img className='userMenu__img' src={user?.imageUrl} alt='' />
             )}
           </IconButton>
         </Tooltip>

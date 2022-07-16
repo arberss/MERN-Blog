@@ -9,8 +9,6 @@ const validationSchema = yup.object().shape({
   comment: yup.string().strict().label('Comment').required(),
 });
 
-const { REACT_APP_WEB_API_IMG_URL } = process.env;
-
 const CommentModal = (props) => {
   const {
     setModal,
@@ -44,7 +42,7 @@ const CommentModal = (props) => {
       enableReinitialize={true}
       initialValues={initialValues}
       onSubmit={(values, actions) =>
-        submitComment({ values, formActions: actions })
+        isAuth ? submitComment({ values, formActions: actions }) : null
       }
       validationSchema={validationSchema}
     >
@@ -53,7 +51,6 @@ const CommentModal = (props) => {
         errors,
         touched,
         handleChange,
-        handleBlur,
         handleSubmit,
         isSubmitting,
         resetForm,
@@ -80,7 +77,7 @@ const CommentModal = (props) => {
                 <div className='commentModal__box-me'>
                   {user?.imageUrl ? (
                     <img
-                      src={`${REACT_APP_WEB_API_IMG_URL}${user?.imageUrl}`}
+                      src={user?.imageUrl}
                       alt=''
                       className='commentModal__box-me-img'
                     />
@@ -122,7 +119,9 @@ const CommentModal = (props) => {
                     newClass={`commentModal__box-button ${
                       !isAuth ? 'commentModal__box-button--disabled' : ''
                     }`}
-                    disabled={isAuth ? false : true}
+                    disabled={!isAuth || isSubmitting || loading}
+                    loading={loading}
+                    loaderSize={3}
                   />
                 </div>
               </form>
