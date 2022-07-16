@@ -37,11 +37,11 @@ const validationSchema = yup.object().shape({
 const Login = (props) => {
   const {
     submitLogin,
-    navigate,
     setModal,
     showModal,
     setRegisterModal,
     setForgotModal,
+    loading,
   } = props;
   const classes = useStyles();
 
@@ -115,7 +115,13 @@ const Login = (props) => {
                 <div className='login__forgotPass' onClick={navigateForgot}>
                   Forgot Password?
                 </div>
-                <Button title='sign in' newClass='login__btn' type='submit' />
+                <Button
+                  title='sign in'
+                  newClass='login__btn'
+                  type='submit'
+                  loading={loading}
+                  disabled={loading || isSubmitting}
+                />
               </form>
               <div className='login__new'>
                 New User? <span onClick={navigateRegister}>Sign up</span>
@@ -131,6 +137,7 @@ const Login = (props) => {
 const mapStateToProps = (state) => ({
   login: state.app.auth.login,
   showModal: state.app.auth.login.modal,
+  loading: state.app.auth.login.loading,
 });
 const mapDispatchToProps = {
   submitLogin: loginActions.login,
