@@ -15,7 +15,9 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 'unset !important',
+    // maxWidth: 'unset !important',
+    maxWidth: '50rem !important',
+    width: "83% !important",
   },
 });
 
