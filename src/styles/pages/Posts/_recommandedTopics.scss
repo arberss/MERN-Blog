@@ -4,6 +4,10 @@
   &__sticky {
     margin-top: 1rem;
     transition: 0.2s ease-in-out;
+
+    @include respond(xs-phone) {
+      position: relative !important;
+    }
   }
 
   &__title {
