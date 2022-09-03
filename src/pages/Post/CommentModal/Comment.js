@@ -68,7 +68,7 @@ const Comment = (props) => {
         <div className='commentModal__comment-content'>{comment?.text}</div>
       </div>
       <DialogComp
-        msg='Are you sure you want to delete this post?'
+        msg='Are you sure you want to delete this comment?'
         isOpen={isDialogOpen}
         onClose={handleCloseDelete}
         onConfirm={handleConfirmDelete}
