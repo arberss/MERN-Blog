@@ -56,18 +56,17 @@ const PostComp = (props) => {
   return (
     <div className={`postComp ${newClass ? newClass : ''}`}>
       <div className='postComp__title'>{title}</div>
-      <div className='postComp__content' >
+      <div className='postComp__content'>
         {!loading && data?.length > 0 ? (
           data?.map((post) => {
             return (
-              <div className='postComp__post' key={post._id} onClick={() =>
-                handleNavigation(post?.postStatus, post?._id)
-              }>
+              <div
+                className='postComp__post'
+                key={post._id}
+                onClick={() => handleNavigation(post?.postStatus, post?._id)}
+              >
                 <div className='postComp__post-left'>
-                  <div
-                    className='postComp__post-navigate'
-
-                  >
+                  <div className='postComp__post-navigate'>
                     <div className='postComp__post-user'>
                       {post?.creator.name}
                     </div>
@@ -77,22 +76,22 @@ const PostComp = (props) => {
                     <div className='postComp__post-date'>
                       {moment(post.createdAt).format('MMM D')}
                     </div>
-                    <div className='postComp__post-fav-content' onClick={(e) => handleFavorite(e, post._id)}>
+                    <div
+                      className='postComp__post-fav-content'
+                      onClick={(e) => handleFavorite(e, post._id)}
+                    >
                       {user?.favorites?.includes(post?._id) ? (
-                        <FavFilled
-                          className='postComp__post-favorite'
-                        />
+                        <FavFilled className='postComp__post-favorite' />
                       ) : (
-                        <FavUnfilled
-                          className='postComp__post-favorite'
-                        />
+                        <FavUnfilled className='postComp__post-favorite' />
                       )}
                     </div>
                   </div>
                 </div>
-                <div className='postComp__post-right' onClick={() =>
-                  handleNavigation(post?.postStatus, post?._id)
-                }>
+                <div
+                  className='postComp__post-right'
+                  onClick={() => handleNavigation(post?.postStatus, post?._id)}
+                >
                   {post.imageUrl && (
                     <img
                       src={post.imageUrl}
@@ -105,13 +104,13 @@ const PostComp = (props) => {
                   <div className='postComp__actions'>
                     <div
                       className='postComp__actions-btn postComp__actions-edit'
-                      onClick={() => editFn(post?._id)}
+                      onClick={(e) => editFn(e, post?._id)}
                     >
                       Edit
                     </div>
                     <div
                       className='postComp__actions-btn postComp__actions-delete'
-                      onClick={() => deleteFn(post?._id, 'myPost')}
+                      onClick={(e) => deleteFn(e, post?._id, 'myPost')}
                     >
                       Delete
                     </div>
