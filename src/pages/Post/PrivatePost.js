@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { actions as postActions } from 'store/sagas/app/post';
@@ -20,6 +20,7 @@ import StickyComp from './StickyComponent';
 import DropDownMenu from 'components/DropDownMenu';
 import Loader from 'components/Loader';
 import PostActions from 'components/PostActions';
+import DialogComp from 'components/Dialog';
 
 const PrivatePost = (props) => {
   const {
@@ -48,6 +49,7 @@ const PrivatePost = (props) => {
     socket,
     commentLoading,
   } = props;
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     const postId = match?.params?.postId;
@@ -79,10 +81,21 @@ const PrivatePost = (props) => {
     navigate(`/posts/update/${post?._id}`);
   };
 
+  const deleteFn = () => {
+    setIsDialogOpen(true);
+  };
+  const handleConfirmDelete = () => {
+    deletePost({ id: post?._id, status: post?.postStatus });
+    handleCloseDelete();
+  };
+  const handleCloseDelete = () => {
+    setIsDialogOpen(false);
+  };
+
   const lists = [
     {
       name: 'Delete',
-      fn: () => deletePost({ id: post?._id, status: post?.postStatus }),
+      fn: () => deleteFn(),
     },
     {
       name: 'Edit',
@@ -243,6 +256,12 @@ const PrivatePost = (props) => {
         selectedComment={comment}
         initialValues={initialValues}
         loading={commentLoading}
+      />
+      <DialogComp
+        msg='Are you sure you want to delete this post?'
+        isOpen={isDialogOpen}
+        onClose={handleCloseDelete}
+        onConfirm={handleConfirmDelete}
       />
     </div>
   );

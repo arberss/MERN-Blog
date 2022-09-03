@@ -4,6 +4,7 @@ import createAction from 'utils/action-creator';
 import Logger from 'utils/logger';
 import axios from 'utils/axios';
 import { actions as commentActions } from './index';
+import { toast } from 'react-toastify';
 
 const logger = new Logger('Comments Post');
 
@@ -42,6 +43,15 @@ export const sagas = {
       );
       yield put(commentActions.deleteCommentSuccess(response?.data));
       yield put(actions.setLoading(false));
+      toast.success('The comment is deleted succesfully.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('ERRRRORII', error);

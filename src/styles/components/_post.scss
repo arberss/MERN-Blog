@@ -103,9 +103,16 @@
   }
 
   &__actions {
+    position: relative;
+    z-index: 2;
+
     &-btn {
       cursor: pointer;
       font-size: 1.2rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     &-edit {
