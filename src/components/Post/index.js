@@ -30,7 +30,9 @@ const PostComp = (props) => {
   } = props;
   const { page, size, totalSize, handlePagination } = pagination || {};
 
-  const handleFavorite = (postId) => {
+  const handleFavorite = (e, postId) => {
+    e.stopPropagation();
+
     if (!isAuth) {
       setModal(true);
       toast.warning('Sign In to make it favorite.', {
@@ -54,17 +56,17 @@ const PostComp = (props) => {
   return (
     <div className={`postComp ${newClass ? newClass : ''}`}>
       <div className='postComp__title'>{title}</div>
-      <div className='postComp__content'>
+      <div className='postComp__content' >
         {!loading && data?.length > 0 ? (
           data?.map((post) => {
             return (
-              <div className='postComp__post' key={post._id}>
+              <div className='postComp__post' key={post._id} onClick={() =>
+                handleNavigation(post?.postStatus, post?._id)
+              }>
                 <div className='postComp__post-left'>
                   <div
                     className='postComp__post-navigate'
-                    onClick={() =>
-                      handleNavigation(post?.postStatus, post?._id)
-                    }
+
                   >
                     <div className='postComp__post-user'>
                       {post?.creator.name}
@@ -75,22 +77,22 @@ const PostComp = (props) => {
                     <div className='postComp__post-date'>
                       {moment(post.createdAt).format('MMM D')}
                     </div>
-                    {user?.favorites?.includes(post?._id) ? (
-                      <FavFilled
-                        className='postComp__post-favorite'
-                        onClick={() => handleFavorite(post._id)}
-                      />
-                    ) : (
-                      <FavUnfilled
-                        className='postComp__post-favorite'
-                        onClick={() => handleFavorite(post._id)}
-                      />
-                    )}
+                    <div className='postComp__post-fav-content' onClick={(e) => handleFavorite(e, post._id)}>
+                      {user?.favorites?.includes(post?._id) ? (
+                        <FavFilled
+                          className='postComp__post-favorite'
+                        />
+                      ) : (
+                        <FavUnfilled
+                          className='postComp__post-favorite'
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
-                <div className='postComp__post-right'  onClick={() =>
-                      handleNavigation(post?.postStatus, post?._id)
-                    }>
+                <div className='postComp__post-right' onClick={() =>
+                  handleNavigation(post?.postStatus, post?._id)
+                }>
                   {post.imageUrl && (
                     <img
                       src={post.imageUrl}

@@ -24,6 +24,7 @@
     padding: 1.5rem;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     transition: 0.5s ease-in-out;
+    cursor: pointer;
 
     &:hover {
       box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
@@ -83,8 +84,17 @@
       align-items: center;
       justify-content: space-between;
       margin-top: 1rem;
+      padding: 15px 0;
       color: rgba(117, 117, 117, 1);
       font-size: 1.2rem;
+      position: relative;
+    }
+
+    &-fav-content {
+      position: absolute;
+      right: 10px;
+      top: 25%;
+      z-index: 2;
     }
 
     &-favorite {
