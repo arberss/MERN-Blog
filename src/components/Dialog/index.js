@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function DialogComp({ isOpen, onClose, onConfirm, msg }) {
   return (
     <Dialog
+      data-testid='dialog'
       open={isOpen}
       onClose={onClose}
       aria-labelledby='alert-dialog-title'

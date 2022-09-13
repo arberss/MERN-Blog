@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   root: {
     // maxWidth: 'unset !important',
     maxWidth: '50rem !important',
-    width: "83% !important",
+    width: '83% !important',
   },
 });
 
@@ -65,6 +65,7 @@ const Login = (props) => {
       aria-labelledby='scroll-dialog-title'
       aria-describedby='scroll-dialog-description'
       PaperProps={{ classes: { root: classes.root } }}
+      data-testid="login-dialog"
     >
       <div className='login'>
         <CloseIcon className='login__close' onClick={() => setModal(false)} />
@@ -118,6 +119,7 @@ const Login = (props) => {
                   Forgot Password?
                 </div>
                 <Button
+                  data-testid='login'
                   title='sign in'
                   newClass='login__btn'
                   type='submit'

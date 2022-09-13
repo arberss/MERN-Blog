@@ -37,6 +37,7 @@ function DropDown(props) {
           onChange={handleChange}
           label={label}
           className='dropdownMenu__select'
+          data-testid="select-dropdown"
         >
           {options?.map((opt) => {
             return (
@@ -44,6 +45,7 @@ function DropDown(props) {
                 value={opt.value}
                 className={`dropdownMenu__item ${menuClass ? menuClass : ''}`}
                 key={opt?.value}
+                data-testid="select-options"
               >
                 {opt?.name}
               </MenuItem>
