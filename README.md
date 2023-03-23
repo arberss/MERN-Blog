@@ -1,10 +1,11 @@
-screencapture-localhost-3000-2023-03-23-21_28_10.png
-screencapture-localhost-3000-posts-update-641cb634776fe166d1c217d0-2023-03-23-21_35_06.png
-Screenshot 2023-03-23 at 21.33.24.png
-screencapture-localhost-3000-post-Public-641cb634776fe166d1c217d0-2023-03-23-21_29_49.png
-Screenshot 2023-03-23 at 21.33.57.png
-screencapture-localhost-3000-posts-2023-03-23-21_28_41.png
-screencapture-localhost-3000-user-settings-2023-03-23-21_34_31.png
+![screencapture-localhost-3000-2023-03-23-21_28_10](https://user-images.githubusercontent.com/74071976/227353675-a50db24f-5199-4a5e-b9bf-3ca53a14776b.png)
+![screencapture-localhost-3000-posts-update-641cb634776fe166d1c217d0-2023-03-23-21_35_06](https://user-images.githubusercontent.com/74071976/227353713-7af2c415-2797-4841-a2d1-17c3ccf77b80.png)
+<img width="1440" alt="Screenshot 2023-03-23 at 21 33 24" src="https://user-images.githubusercontent.com/74071976/227353750-b9cd4769-e429-4492-a030-2af740377c8a.png">
+![screencapture-localhost-3000-post-Public-641cb634776fe166d1c217d0-2023-03-23-21_29_49](https://user-images.githubusercontent.com/74071976/227353764-a3805a35-a6ef-482b-834c-b1ff67c5686f.png)
+<img width="1440" alt="Screenshot 2023-03-23 at 21 33 57" src="https://user-images.githubusercontent.com/74071976/227353782-3e457f4a-46c4-446a-83b3-7bc2fad1567e.png">
+![screencapture-localhost-3000-posts-2023-03-23-21_28_41](https://user-images.githubusercontent.com/74071976/227353797-366bf74d-638f-4f28-b9f0-d2870414f6e7.png)
+![screencapture-localhost-3000-user-settings-2023-03-23-21_34_31](https://user-images.githubusercontent.com/74071976/227353817-0948a143-105c-445a-a811-ba346f1d7e30.png)
+
 
 # Getting Started with Create React App
 
