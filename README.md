@@ -1,3 +1,11 @@
+screencapture-localhost-3000-2023-03-23-21_28_10.png
+screencapture-localhost-3000-posts-update-641cb634776fe166d1c217d0-2023-03-23-21_35_06.png
+Screenshot 2023-03-23 at 21.33.24.png
+screencapture-localhost-3000-post-Public-641cb634776fe166d1c217d0-2023-03-23-21_29_49.png
+Screenshot 2023-03-23 at 21.33.57.png
+screencapture-localhost-3000-posts-2023-03-23-21_28_41.png
+screencapture-localhost-3000-user-settings-2023-03-23-21_34_31.png
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
